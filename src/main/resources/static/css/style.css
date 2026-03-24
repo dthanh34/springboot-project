@@ -1,0 +1,156 @@
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    background: white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.logo-wrapper { display: flex; align-items: center; gap: 0.5rem; }
+.logo-icon { width: 2.5rem; height: 2.5rem; background-color: #22c55e; border-radius: 9999px; }
+.logo-text { font-size: 1.5rem; font-weight: 700; color: #16a34a; margin: 0; }
+
+.btn-secondary {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-secondary:hover { background-color: #f9fafb; }
+
+.btn-primary {
+    padding: 0.5rem 1.5rem;
+    background-color: #22c55e;
+    color: white;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-primary:hover { background-color: #16a34a; }
+
+.hero-section {
+    padding: 5rem 1rem;
+    text-align: center;
+    background-color: rgba(240, 253, 244, 0.5);
+}
+
+.hero-title { font-size: 3rem; font-weight: 700; margin-bottom: 1.5rem; }
+.text-green { color: #16a34a; }
+.text-yellow { color: #ca8a04; }
+
+.hero-subtitle {
+    color: #4b5563;
+    font-size: 1.125rem;
+    max-width: 42rem;
+    margin: 0 auto 2.5rem auto;
+}
+
+.btn-cta {
+    background-color: #4ade80;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+.btn-cta:hover { transform: scale(1.05); background-color: #22c55e; }
+
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 4rem auto 0 auto;
+}
+
+.feature-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    text-align: left;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.feature-card:hover { transform: translateY(-0.5rem); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+
+.card-blue { border-top: 4px solid #60a5fa; }
+
+.icon-box {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+.icon-red { background-color: #fee2e2; color: #ef4444; }
+.icon-blue { background-color: #dbeafe; color: #3b82f6; }
+.icon-green { background-color: #dcfce7; color: #22c55e; }
+.icon-yellow { background-color: #fef9c3; color: #eab308; }
+
+.card-title { font-weight: 700; margin-bottom: 0.5rem; }
+.card-desc { font-size: 0.75rem; color: #6b7280; }
+
+
+.stats-container { max-width: 1000px; margin: -2rem auto 0 auto; padding: 0 1rem; }
+.stats-grid {
+    background: white;
+    padding: 3rem 0;
+    border-radius: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f9fafb;
+}
+
+.stat-number { font-size: 1.875rem; font-weight: 700; margin: 0; }
+.stat-label { color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem; }
+.border-x { border-left: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; }
+
+
+.promo-banner { max-width: 1200px; margin: 3rem auto 5rem auto; padding: 0 1rem; }
+.banner-content {
+    background: linear-gradient(to right, #22c55e, #eab308);
+    border-radius: 1rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: white;
+}
+.banner-title { font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem; }
+.banner-text { margin-bottom: 2rem; opacity: 0.9; }
+.btn-banner {
+    background: white;
+    color: #15803d;
+    padding: 0.75rem 2.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+.main-footer { padding: 2.5rem 0; text-align: center; color: #9ca3af; font-size: 0.75rem; }

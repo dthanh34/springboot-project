@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthyFood AI - Quản lý dinh dưỡng thông minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/188/188333.png" alt="Logo">
+            <span>Healthy Food</span>
+        </div>
+        <nav class="menu">
+            <a href="#" class="active"><i class="fas fa-home"></i> Trang chủ</a>
+            <a href="#"><i class="fas fa-user-circle"></i> Hồ sơ sức khỏe</a>
+            <a href="#"><i class="fas fa-utensils"></i> Món ăn</a>
+            <a href="#"><i class="fas fa-calendar-alt"></i> Thực đơn</a>
+            <a href="#"><i class="fa-solid fa-chart-line"></i>Tiến trình</a>
+            <a href="#"><i class="fa-regular fa-heart"></i>Yêu thích</a>  
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm</a>
+            <a href="#"><i class="fa-solid fa-gear"></i>Cài đặt</a>     
+            </nav>
+        <div class="logout-box">
+            <a href="/login" onclick="localStorage.clear()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="welcome">
+                <h1 id="user-name">Xin chào, ...</h1>
+                <p>Chúc bạn một ngày tốt lành!</p>
+            </div>
+            <button class="btn-add">+ Thêm bữa ăn</button>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-label">Calo mục tiêu/ngày</p>
+                <h2 id="tdee-value">0</h2>
+                <div class="progress-bar"><div class="fill" style="width: 0%"></div></div>
+                <small>Dựa trên TDEE của bạn</small>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Chỉ số BMI</p>
+                <h2 id="bmi-value">0</h2>
+                <span class="badge" id="bmi-status">Đang tính...</span>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Chỉ số BMR</p>
+                <h2 id="bmr-value">0</h2>
+                <small>Năng lượng nghỉ ngơi</small>
+            </div>
+            <div class="stat-card highlight-blue">
+                <p class="stat-label">Mục tiêu hiện tại</p>
+                <h2 id="goal-value">Chưa có</h2>
+                <small>Cập nhật trong hồ sơ</small>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="section-header">
+                <h3>Bữa ăn hôm nay</h3>
+                <a href="#">Xem tất cả ></a>
+            </div>
+            <div class="meal-row">
+                <div class="meal-item"><span>Bữa sáng</span></div>
+                <div class="meal-item"><span>Bữa trưa</span></div>
+                <div class="meal-item"><span>Bữa tối</span></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h3>Gợi ý cho bạn</h3>
+                <a href="#">Xem thêm ></a>
+            </div>
+            <div class="empty-placeholder">
+                <p>Đang phân tích các món ăn phù hợp với sức khỏe của bạn...</p>
+            </div>
+        </section>
+    </main>
+</div>
+<script th:src="@{js/user_dashboard.js}"></script>
+</body>
+</html>

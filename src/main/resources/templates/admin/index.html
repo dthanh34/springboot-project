@@ -1,0 +1,10 @@
+<h1>Trang ADMIN</h1>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user || user.role !== "ADMIN") {
+    alert("Không có quyền!");
+    window.location.href = "/login";
+}
+</script>

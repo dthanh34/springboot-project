@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Food</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-wrapper">
+            <div class="logo-icon"></div>
+            <h1 class="logo-text">Healthy Food</h1>
+        </div>
+        <div class="auth-buttons">
+            <button id="btnLogin" class="btn-secondary">Đăng nhập</button>
+            <button id="btnRegister" class="btn-primary">Đăng ký ngay</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h2 class="hero-title">
+                <span class="text-green">Quản lý dinh dưỡng</span> 
+                <span class="text-yellow">thông minh</span>
+            </h2>
+            <p class="hero-subtitle">
+                Gợi ý món ăn phù hợp cho sức khỏe, theo dõi tiến độ và đạt được mục tiêu của bạn
+            </p>
+            <button class="btn-cta">Bắt đầu miễn phí →</button>
+
+            <div class="features-grid">
+                <div class="feature-card card-red">
+                    <div class="icon-box icon-red"><i class="fa-solid fa-heart"></i></div>
+                    <h3 class="card-title">Theo dõi sức khỏe</h3>
+                    <p class="card-desc">Giám sát BMI, BMR, TDEE và calo hàng ngày</p>
+                </div>
+                
+                <div class="feature-card card-blue">
+                    <div class="icon-box icon-blue"><i class="fa-solid fa-check"></i></div>
+                    <h3 class="card-title">Đạt mục tiêu</h3>
+                    <p class="card-desc">Giảm cân, tăng cân, duy trì cân nặng lý tưởng</p>
+                </div>
+
+                <div class="feature-card card-green">
+                    <div class="icon-box icon-green"><i class="fa-solid fa-utensils"></i></div>
+                    <h3 class="card-title">Gợi ý món ăn</h3>
+                    <p class="card-desc">Khám phá món ăn phù hợp với sức khỏe của bạn</p>
+                </div>
+
+                <div class="feature-card card-yellow">
+                    <div class="icon-box icon-yellow"><i class="fa-solid fa-calendar-days"></i></div>
+                    <h3 class="card-title">Lập kế hoạch</h3>
+                    <p class="card-desc">Tạo thực đơn tuần tới dễ dàng</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <p class="stat-number text-green counter" data-target="1701">0</p>
+                    <p class="stat-label">Người dùng</p>
+                </div>
+                <div class="stat-item border-x">
+                    <p class="stat-number text-yellow counter" data-target="856">0</p>
+                    <p class="stat-label">Món ăn</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number text-blue counter" data-target="3421">0</p>
+                    <p class="stat-label">Thực đơn đã tạo</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="promo-banner">
+            <div class="banner-content">
+                <h3 class="banner-title">Sẵn sàng bắt đầu hành trình sức khỏe?</h3>
+                <p class="banner-text">Tạo tài khoản miễn phí và nhận gợi ý món ăn phù hợp ngay hôm nay</p>
+                <button class="btn-banner">Đăng ký miễn phí →</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        © 2026 Healthy Food. Website gợi ý món ăn dựa trên sức khỏe.
+    </footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

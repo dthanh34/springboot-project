@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Healthy Food</title>
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" >
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-wrapper">
+                <div class="logo-circle">
+                    <img src="https://cdn-icons-png.flaticon.com/512/188/188333.png" alt="Healthy Logo" class="login-logo-img">
+                </div>
+            </div>
+            <h2> Đăng nhập</h2>
+            <p class="subtitle">Nhập tên tài khoản và mật khẩu để tiếp tục</p>
+
+            <div class="form-group">
+                <label>Tên tài khoản</label>
+                <input id="name" placeholder="Tên đăng nhập của bạn">
+            </div>
+
+            <div class="form-group">
+                <label>Mật khẩu </label>
+                <input type="password" id="password" placeholder="Nhập mật khẩu">
+            </div>
+            <button class="btn-login" onclick="login()">Đăng nhập</button>
+            <div class="footer-links">
+                Bạn chưa có tài khoản ? <a th:href="@{/register}">Đăng kí ngay</a>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{js/login.js}"></script>
+</body>
+</html>

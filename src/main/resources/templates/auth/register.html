@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản - Healthy Food</title>
+
+    <link rel="stylesheet" th:href="@{/css/register.css}" href="../../static/css/register.css">
+
+    <style>
+        .form-step {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .form-step.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon"></div>
+        <h1>Healthy Food</h1>
+    </div>
+
+</header>
+
+<main class="main">
+    <div class="card">
+
+        <div class="step-bar">
+            <div class="step-indicator active"></div>
+            <div class="step-indicator"></div>
+            <div class="step-indicator"></div>
+            <div class="step-indicator"></div>
+        </div>
+
+        <div class="form-step active" id="step-1">
+            <div class="form-group">
+                <label>Họ và tên</label>
+                <input type="text" placeholder="Nhập họ và tên của bạn " id="name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="email@gmail.com" id="email">
+            </div>
+
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <input type="password" id="password">
+            </div>
+
+            <div class="form-group">
+                <label>Xác nhận mật khẩu</label>
+                <input type="password" id="confirmpassword">
+            </div>
+
+            <button class="btn-primary full" onclick="nextStep(1)">Đăng ký</button>
+
+            <p class="text-center">
+                Đã có tài khoản? <a th:href="@{/login}">Đăng nhập</a>
+            </p>
+        </div>
+
+        <div class="form-step" id="step-2">
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Giới tính</label>
+                    <select id="gender">
+                        <option value="true">Nam</option>
+                        <option value="false">Nữ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Độ tuổi</label>
+                    <input type="number" id="age">
+                </div>
+
+                <div class="form-group">
+                    <label>Chiều cao(cm)</label>
+                    <input type="number" id="height">
+                </div>
+
+                <div class="form-group">
+                    <label>Cân nặng(kg)</label>
+                    <input type="number" id="weight">
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn-outline" onclick="prevStep(2)">← Quay lại</button>
+                <button class="btn-primary" onclick="nextStep(2)">Tiếp tục →</button>
+            </div>
+        </div>
+
+        <div class="form-step" id="step-3">
+            <div class="form-group">
+                <label>Chiều cao mục tiêu</label>
+                <input type="number" id="desiredHeight">
+            </div>
+
+            <div class="form-group">
+                <label>Cân nặng mục tiêu</label>
+                <input type="number" id="desiredWeight">
+            </div>
+
+            <div class="form-group">
+                <label>Mục tiêu</label>
+                <div class="goal-group" id="goalGroup">
+                    <button type="button" data-value="Giảm cân">Giảm cân</button>
+                    <button type="button" data-value="Duy trì" class="active">Duy trì</button>
+                    <button type="button" data-value="Tăng cân">Tăng cân</button>
+                </div>
+                <input type="hidden" id="selectedGoal" value="Duy trì">
+            </div>
+
+            <div class="row">
+                <button class="btn-outline" onclick="prevStep(3)">← Quay lại</button>
+                <button class="btn-primary" onclick="nextStep(3)">Tiếp tục →</button>
+            </div>
+        </div>
+
+        <div class="form-step" id="step-4">
+            <div class="form-group">
+                <label>Dị ứng thực phẩm</label>
+                <div id="allergyContainer" class="tag-container">
+                    <div class="tag" data-id="10">Đậu phộng <span onclick="removeTag(this)">×</span></div>
+                </div>
+                <button type="button" class="btn-dashed" id="btnAddAllergy">Thêm +</button>
+            </div>
+
+            <div class="form-group">
+                <label>Bệnh lý</label>
+                <div id="diseaseContainer" class="tag-container">
+                </div>
+                <button type="button" class="btn-dashed" id="btnAddDisease">Thêm +</button>
+            </div>
+
+            <div class="row">
+                <button type="button" class="btn-outline" onclick="prevStep(4)">← Quay lại</button>
+                <button type="button" class="btn-primary" onclick="submitForm()">Hoàn tất →</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="footer">
+    © 2026 Healthy Food. Website gợi ý món ăn dựa trên sức khỏe.
+</footer>
+<script th:src="@{/js/register.js}" src="../../static/js/register.js"></script>
+
+</body>
+</html>

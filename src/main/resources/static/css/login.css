@@ -1,0 +1,106 @@
+:root{
+    --primary-color: #2ecc71;
+    --bg-color: #e8f5e9;
+    --text-main: #333;
+    --text-sub: #888;
+}
+body {
+    margin : 0;
+    padding : 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-card {
+    background : white;
+    padding : 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,  0, 0, 0.05);
+    width : 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.logo-wrapper {
+    background: var(--primary-color);
+    width: 60px;
+    height : 60px;
+    border-radius: 50%;
+    display : flex;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    align-items: center;
+}
+.logo-circle {
+    width : 65px;
+    height : 65px;
+    background: white;
+    border-radius: 50%;
+    display : flex;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.login-logo-img{
+    width : 70%;
+    height: 70%;
+    object-fit: contain;
+}
+h2{
+    margin : 10px 0;
+    color : var(--text-main);
+    font-size : 24px;
+}
+.subtitle {
+    color : var(--text-main);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+.form-group{
+    text-align: left;
+    margin-top:20px;
+}
+.form-group label{
+    display : block;
+    font-weight : 600;
+    margin-bottom : 8px;
+    font-size : 14px;
+}
+.form-group input{
+    width: 100%;
+    padding : 12px 15px;
+    border : 1px solid #f0f0f0;
+    border-radius: 8px;
+    background : #f9f9f9;
+    box-sizing: border-box;
+    outline : none ;
+    transition: 0.3s;
+}
+.form-group input:focus{
+    border-color : var(--primary-color);
+    background: white;
+}
+.btn-login {
+    width : 100%;
+    padding : 12px;
+    background: var(--primary-color);
+    color : white;
+    border : none ;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight:600;
+    cursor: pointer;
+    transition: 0,3s;
+    margin-top : 10px;
+}
+.btn-login:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+}
+.footer-links a{
+    color : var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
