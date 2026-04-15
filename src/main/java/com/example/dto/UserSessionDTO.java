@@ -1,5 +1,6 @@
 package com.example.dto;
-
+import lombok.Data;
+@Data
 public class UserSessionDTO {
     private Long id;
     private String name;
@@ -9,6 +10,7 @@ public class UserSessionDTO {
     private float weight;  
     private float height;
     private Boolean gender; 
+    private Double activityLevel;
 
 
     public Long getId() { return id; }

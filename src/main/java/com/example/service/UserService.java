@@ -20,26 +20,30 @@ public class UserService {
     private final UserGoalRepository userGoalRepository;
     private final UserDiseaseRepository userDiseaseRepository;
     private final UserAllergyRepository userAllergyRepository;
-    private final HealthIndexRepository healthIndexRepository; 
+    private final HealthIndexRepository healthIndexRepository;
+    private final DiseaseRepository diseaseRepository;
+    private final IngredientRepository ingredientRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void completeRegistration(User user, String goalType, List<Integer> diseaseIds, List<Integer> ingredientIds) {
-        // Ma hoa mat khau va thiet lap tai khoan ms tao = user
+    public void completeRegistration(User user, String goalType, List<Integer> diseaseIds, List<Integer> ingredientIds,Float activityLevel) {
+
+        // 1. Lưu user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
         User savedUser = userRepository.save(user);
 
-        // luu muc tieu
+        // 2. Lưu mục tiêu
         User_Goal goal = new User_Goal();
         goal.setUser(savedUser);
         goal.setGoal_type(goalType);
-        goal.setTarget_calories(2000.0f); 
+        goal.setTarget_calories(2000.0f);
         userGoalRepository.save(goal);
 
+        // 3. Tính Health Index
         Health_Index healthIndex = new Health_Index();
         healthIndex.setUser(savedUser);
-        
+
         float heightM = savedUser.getHeight() / 100;
         float bmi = savedUser.getWeight() / (heightM * heightM);
         healthIndex.setBmi(bmi);
@@ -48,52 +52,41 @@ public class UserService {
         bmr = savedUser.getGender() ? (bmr + 5) : (bmr - 161);
         healthIndex.setBmr(bmr);
 
-        healthIndex.setTdee(bmr * 1.2f);
-
+        float multiplier = (activityLevel != null) ? activityLevel : 1.2f; 
+        healthIndex.setTdee(bmr * multiplier);
+        healthIndex.setActivityLevel(Double.valueOf(multiplier));
         healthIndex.setCalculatedAt(LocalDateTime.now());
 
         healthIndexRepository.save(healthIndex);
 
+        // 4. Lưu disease
         if (diseaseIds != null && !diseaseIds.isEmpty()) {
-            for (Integer dId : diseaseIds) {
+
+            List<Disease> diseases = diseaseRepository.findAllById(diseaseIds);
+
+            for (Disease disease : diseases) {
                 User_disease ud = new User_disease();
                 ud.setUser(savedUser);
-                Disease disease = new Disease(); disease.setDisease_Id(dId);
                 ud.setDisease(disease);
                 userDiseaseRepository.save(ud);
             }
         }
 
+        // 5. Lưu allergy (ingredient)
         if (ingredientIds != null && !ingredientIds.isEmpty()) {
-            for (Integer iId : ingredientIds) {
+
+            List<Ingredient> ingredients = ingredientRepository.findAllById(ingredientIds);
+
+            for (Ingredient ing : ingredients) {
                 UserAllergy ua = new UserAllergy();
                 ua.setUser(savedUser);
-                Ingredient ing = new Ingredient(); ing.setIngredient_id(iId);
                 ua.setIngredient(ing);
                 userAllergyRepository.save(ua);
             }
         }
     }
 
-    
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public boolean existsByEmail(String email) {
-        return userRepository.findByEmail(email).isPresent();
-    }
-
-    @Transactional
-    public Optional<User> updateHealthMetrics(Long id, float weight, float height, Integer age) {
-        return userRepository.findById(id).map(user -> {
-            user.setWeight(weight);
-            user.setHeight(height);
-            user.setAge(age);
-            return userRepository.save(user);
-        });
-    }
-
+    // ================= LOGIN =================
     public UserSessionDTO login(String name, String password) {
         return userRepository.findByName(name)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()))
@@ -106,11 +99,38 @@ public class UserService {
                     dto.setWeight(user.getWeight());
                     dto.setHeight(user.getHeight());
                     dto.setGender(user.getGender());
+                    Health_Index health = healthIndexRepository.findFirstByUserIdOrderByCalculatedAtDesc(user.getId());
+                    if(health != null){
+                        dto.setActivityLevel(health.getActivityLevel());
+                    } else {
+                        dto.setActivityLevel(1.2);
+                    }
                     return dto;
                 })
                 .orElse(null);
     }
 
+    // ================= GET USER =================
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    // ================= UPDATE =================
+    @Transactional
+    public Optional<User> updateHealthMetrics(Long id, float weight, float height, Integer age) {
+        return userRepository.findById(id).map(user -> {
+            user.setWeight(weight);
+            user.setHeight(height);
+            user.setAge(age);
+            return userRepository.save(user);
+        });
+    }
+
+    // ================= DELETE =================
     @Transactional
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {

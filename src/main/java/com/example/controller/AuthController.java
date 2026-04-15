@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.dto.LoginDTO;
 import com.example.dto.UserSessionDTO;
+import com.example.dto.UserRegisterDTO; // Import DTO mới
 import com.example.entity.User;
 import com.example.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,8 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,17 +24,15 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    // 1. API Đăng nhập (Đã thêm cơ chế tạo Session cho Spring Security)
+    // 1. API Đăng nhập (Giữ nguyên của bạn)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO request, HttpServletRequest servletRequest) {
-        // Gọi UserService kiểm tra name và password (đã mã hóa)
         UserSessionDTO user = userService.login(request.getName(), request.getPassword());
 
         if (user == null) {
             return ResponseEntity.status(401).body("Sai tài khoản hoặc mật khẩu");
         }
 
-        // Tạo đối tượng Authentication với Role lấy từ database (USER/ADMIN)
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 user.getName(), 
                 null, 
@@ -43,48 +40,42 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         HttpSession session = servletRequest.getSession(true);
         session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-
 
         return ResponseEntity.ok(user);
     }
 
+    // 2. API Đăng ký hoàn tất (Đã tối ưu dùng DTO)
     @PostMapping("/register-complete")
-    public ResponseEntity<?> completeRegistration(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<?> completeRegistration(@RequestBody UserRegisterDTO dto) {
         try {
-            // Khởi tạo User và gán dữ liệu từ JSON gửi lên
+            // Khởi tạo User và map dữ liệu từ DTO
             User user = new User();
-            user.setName((String) data.get("name"));
-            user.setEmail((String) data.get("email"));
-            user.setPassword((String) data.get("password"));
+            user.setName(dto.getName());
+            user.setEmail(dto.getEmail());
+            user.setPassword(dto.getPassword());
+            user.setAge(dto.getAge());
+            user.setGender(dto.getGender());
             
-            // Ép kiểu Integer cho tuổi
-            user.setAge(Integer.parseInt(data.get("age").toString()));
-            
-            // Xử lý kiểu số thực (float) tránh lỗi ép kiểu từ Double của Jackson
-            user.setWeight(Float.parseFloat(data.get("weight").toString()));
-            user.setHeight(Float.parseFloat(data.get("height").toString()));
-            user.setGender((Boolean) data.get("gender"));
-            
-            // Chỉ số mục tiêu
-            user.setDesiredHeight(Float.parseFloat(data.get("desiredHeight").toString()));
-            user.setDesiredWeight(Float.parseFloat(data.get("desiredWeight").toString()));
+            // Map các chỉ số cơ thể
+            user.setWeight(dto.getWeight().floatValue());
+            user.setHeight(dto.getHeight().floatValue());
+            user.setDesiredHeight(dto.getDesiredHeight().floatValue());
+            user.setDesiredWeight(dto.getDesiredWeight().floatValue());
 
-            // Trích xuất thông tin mục tiêu và danh sách ID bệnh lý/dị ứng
-            String goalType = (String) data.get("goalType");
-            
-            // Ép kiểu danh sách ID
-            List<Integer> diseaseIds = (List<Integer>) data.get("diseaseIds");
-            List<Integer> ingredientIds = (List<Integer>) data.get("ingredientIds");
-
-            // Gọi UserService thực hiện lưu liên hoàn vào nhiều bảng
-            userService.completeRegistration(user, goalType, diseaseIds, ingredientIds);
+            // Gọi UserService thực hiện lưu liên hoàn (Đã có thêm activityLevel)
+            userService.completeRegistration(
+                user, 
+                dto.getGoalType(), 
+                dto.getDiseaseIds(), 
+                dto.getIngredientIds(), 
+                dto.getActivityLevel().floatValue()
+            );
 
             return ResponseEntity.ok("Đăng ký thành công và đã lưu vào hệ thống!");
         } catch (Exception e) {
-            e.printStackTrace(); // In ra console để debug lỗi ép kiểu nếu có
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("Lỗi khi lưu dữ liệu: " + e.getMessage());
         }
     }

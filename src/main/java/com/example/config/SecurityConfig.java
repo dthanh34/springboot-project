@@ -20,37 +20,27 @@ public class SecurityConfig {
     }
 
     // 2. Cấu hình phân quyền truy cập
- @Bean
+@Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf(csrf -> csrf.disable()) 
+        .csrf(csrf -> csrf.disable())
+
         .authorizeHttpRequests(auth -> auth
-            // 1. Cho phép tất cả mọi người vào các trang này
             .requestMatchers(
-                "/", "/login", "/register/**", "/api/auth/**", 
+                "/", "/login", "/register/**", "/api/**",
                 "/css/**", "/js/**", "/images/**"
-            ).permitAll() 
-            
-            // 2. MỞ KHÓA CHO TRANG USER VÀ ADMIN (QUAN TRỌNG NHẤT)
-            .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+            ).permitAll()
+
             .requestMatchers("/admin/**").hasAuthority("ADMIN")
-            
-            // 3. Các yêu cầu khác phải đăng nhập
-            .anyRequest().authenticated() 
+            .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+
+            .anyRequest().authenticated()
         )
-        .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-        )
-        .formLogin(login -> login
-            .loginPage("/login") 
-            .permitAll()
-        )
-        // Thêm Logout để xóa session khi cần
-        .logout(logout -> logout
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login")
-            .permitAll()
-        );
+
+        // 🔥 QUAN TRỌNG: tắt login redirect cho API
+        .formLogin(login -> login.disable())
+
+        .httpBasic(httpBasic -> httpBasic.disable());
 
     return http.build();
 }

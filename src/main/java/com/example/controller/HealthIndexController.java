@@ -55,7 +55,7 @@ public class HealthIndexController {
     }
 
     @GetMapping("/latest/{userId}")
-    public ResponseEntity<?> getLatestIndex(@PathVariable Integer userId) {
+    public ResponseEntity<?> getLatestIndex(@PathVariable Long userId) {
         Health_Index latest = healthIndexRepository.findFirstByUserIdOrderByCalculatedAtDesc(userId);
         if (latest == null) {
             return ResponseEntity.notFound().build();

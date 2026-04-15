@@ -26,9 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.getElementById('btnLogin').addEventListener('click', function() {
-    window.location.href = 'login.html';
+    window.location.href = '/login';
 });
 
 document.getElementById('btnRegister').addEventListener('click', function() {
     window.location.href = '/register';
+});
+document.getElementById('btnStart').addEventListener('click',function(){
+    window.location.href = '/login';
 });

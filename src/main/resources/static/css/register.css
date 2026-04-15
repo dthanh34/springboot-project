@@ -204,8 +204,67 @@ input, select {
     color: gray;
     font-size: 12px;
 }
-
-
+.modal {
+    position: fixed;
+    top: 0;
+    left : 0;
+    width: 100%;
+    height : 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.hidden {
+    display: none;
+}
+.modal-content{
+    background: white;
+    padding : 20px;
+    width : 400px;
+    border-radius: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+#searchIngredient {
+    margin-bottom : 10px;
+}
+#searchDisease {
+    margin-bottom : 10px;
+}
+#ingredientList div {
+    padding : 10px;
+    border : 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0,2s;
+}
+#ingredientList div:hover{
+    background: #f0fdf4;
+}
+#ingredientList div.active{
+    background: #22c55e;
+    color : white;
+    border-color: #22c55e;
+}
+#DiseaseList div{
+    padding : 10px;
+    border : 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0,2s;
+}
+#DiseaseList div:hover {
+    background: #f0fdf4;
+}
+#DiseaseList div.active{
+    background: #22c55e;
+    color : white;
+    border-color: #22c55e;
+}
 .text-center {
     text-align: center;
     margin-top: 15px;

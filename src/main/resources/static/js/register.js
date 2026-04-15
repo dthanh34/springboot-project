@@ -12,96 +12,261 @@ const subtitles = [
     "Giúp chúng tôi gợi ý món ăn an toàn hơn"
 ];
 
-// --- 1. XỬ LÝ CHUYỂN BƯỚC ---
+let ingredientData = [];
+let selectedIngredients = new Set();
+
+let diseaseData = [];
+let selectedDiseases = new Set();
+
+
+// ================= STEP =================
 function showStep(step) {
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
     document.getElementById(`step-${step}`).classList.add('active');
 
-    // Cập nhật tiêu đề
-    const titleElem = document.getElementById('step-title');
-    const subtitleElem = document.getElementById('step-subtitle');
-    if(titleElem) titleElem.innerText = titles[step - 1];
-    if(subtitleElem) subtitleElem.innerText = subtitles[step - 1];
+    document.getElementById('step-title').innerText = titles[step - 1];
+    document.getElementById('step-subtitle').innerText = subtitles[step - 1];
 
-    // Cập nhật thanh tiến trình (Step Bar)
-    const indicators = document.querySelectorAll('.step-indicator');
-    indicators.forEach((ind, index) => {
-        ind.classList.toggle('active', index < step); // Làm sáng các bước đã qua
+    document.querySelectorAll('.step-indicator').forEach((ind, index) => {
+        ind.classList.toggle('active', index < step);
     });
 }
 
-function nextStep(currentStep) {
-    // Có thể thêm logic kiểm tra validate dữ liệu từng bước ở đây
-    showStep(currentStep + 1);
+function nextStep(step) {
+    showStep(step + 1);
 }
 
-function prevStep(currentStep) {
-    showStep(currentStep - 1);
+function prevStep(step) {
+    showStep(step - 1);
 }
 
-// --- 2. XỬ LÝ CHỌN MỤC TIÊU (STEP 3) ---
-document.addEventListener('DOMContentLoaded', function() {
-    const goalButtons = document.querySelectorAll('.goal-group button');
-    goalButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            goalButtons.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-        });
+
+// ================= LOAD =================
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.goal-group button').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        // bỏ active tất cả
+        document.querySelectorAll('.goal-group button')
+            .forEach(b => b.classList.remove('active'));
+
+        // set active cho cái vừa click
+        this.classList.add('active');
+
+        // cập nhật giá trị hidden
+        document.getElementById('selectedGoal').value = this.dataset.value;
     });
+    });
+
+    // ===== BUTTON ADD ALLERGY =====
+    document.getElementById('btnAddAllergy').onclick = () => {
+        document.getElementById('ingredientModal').classList.remove('hidden');
+
+        fetch('/api/ingredients')
+            .then(res => res.json())
+            .then(data => {
+                ingredientData = data;
+                renderIngredientList(data);
+            })
+            .catch(err => console.error(err));
+    };
+
+    // ===== BUTTON ADD DISEASE =====
+    document.getElementById('btnAddDisease').onclick = () => {
+        document.getElementById('diseaseModal').classList.remove('hidden');
+
+        fetch('/api/diseases')
+            .then(res => res.json())
+            .then(data => {
+                diseaseData = data;
+                renderDiseaseList(data);
+            })
+            .catch(err => console.error(err));
+    };
+
+    // ===== CONFIRM =====
+    document.getElementById('btnConfirmIngredient').onclick = confirmIngredient;
+    document.getElementById('btnConfirmDisease').onclick = confirmDisease;
+
+    // ===== SEARCH =====
+    document.getElementById('searchIngredient').oninput = function () {
+        const k = this.value.toLowerCase();
+        renderIngredientList(
+            ingredientData.filter(i => i.ingredient_name.toLowerCase().includes(k))
+        );
+    };
+
+    document.getElementById('searchDisease').oninput = function () {
+        const k = this.value.toLowerCase();
+        renderDiseaseList(
+            diseaseData.filter(i => i.disease_name.toLowerCase().includes(k))
+        );
+    };
 });
 
-// --- 3. XỬ LÝ XÓA TAG (STEP 4) ---
-function removeTag(element) {
-    element.parentElement.remove();
+
+// ================= RENDER =================
+function renderIngredientList(list) {
+    const container = document.getElementById('ingredientList');
+    container.innerHTML = '';
+
+    list.forEach(item => {
+        const div = document.createElement('div');
+        div.innerText = item.ingredient_name;
+        div.dataset.id = item.ingredient_id;
+
+        if (selectedIngredients.has(item.ingredient_id)) {
+            div.classList.add('active');
+        }
+
+        div.onclick = () => {
+            if (selectedIngredients.has(item.ingredient_id)) {
+                selectedIngredients.delete(item.ingredient_id);
+                div.classList.remove('active');
+            } else {
+                selectedIngredients.add(item.ingredient_id);
+                div.classList.add('active');
+            }
+        };
+
+        container.appendChild(div);
+    });
 }
 
-// --- 4. GỬI DỮ LIỆU VỀ BACKEND (HOÀN TẤT) ---
+function renderDiseaseList(list) {
+    const container = document.getElementById('DiseaseList'); 
+    container.innerHTML = '';
+
+    list.forEach(item => {
+        const div = document.createElement('div');
+        div.innerText = item.disease_name;
+        div.dataset.id = item.disease_id;
+
+        if (selectedDiseases.has(item.disease_id)) {
+            div.classList.add('active');
+        }
+
+        div.onclick = () => {
+            if (selectedDiseases.has(item.disease_id)) {
+                selectedDiseases.delete(item.disease_id);
+                div.classList.remove('active');
+            } else {
+                selectedDiseases.add(item.disease_id);
+                div.classList.add('active');
+            }
+        };
+
+        container.appendChild(div);
+    });
+}
+
+
+// ================= CONFIRM =================
+function confirmIngredient() {
+    const container = document.getElementById('allergyContainer');
+    container.innerHTML = '';
+
+    selectedIngredients.forEach(id => {
+        const item = ingredientData.find(i => i.ingredient_id == id);
+
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.setAttribute('data-id', id);
+
+        tag.innerHTML = `
+            ${item.ingredient_name}
+            <span onclick="removeTag(this)">x</span>
+        `;
+
+        container.appendChild(tag);
+    });
+
+    closeModal();
+}
+
+function confirmDisease() {
+    const container = document.getElementById('diseaseContainer');
+    container.innerHTML = '';
+
+    selectedDiseases.forEach(id => {
+        const item = diseaseData.find(i => i.disease_id == id);
+
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.setAttribute('data-id', id);
+
+        tag.innerHTML = `
+            ${item.disease_name}
+            <span onclick="removeTag(this)">x</span>
+        `;
+
+        container.appendChild(tag);
+    });
+
+    closeDiseaseModal();
+}
+
+
+// ================= REMOVE =================
+function removeTag(el) {
+    const tag = el.parentElement;
+    const id = parseInt(tag.getAttribute('data-id'));
+
+    selectedIngredients.delete(id);
+    selectedDiseases.delete(id);
+
+    tag.remove();
+}
+
+
+// ================= MODAL =================
+function closeModal() {
+    document.getElementById('ingredientModal').classList.add('hidden');
+}
+
+function closeDiseaseModal() {
+    document.getElementById('diseaseModal').classList.add('hidden');
+}
+
+
+// ================= SUBMIT =================
 function submitForm() {
-    // Thu thập dữ liệu từ các ID đã đặt trong HTML
-    const registrationData = {
-        // Step 1
+    const data = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
-        
-        // Step 2
+
         gender: document.getElementById('gender').value === "true",
         age: parseInt(document.getElementById('age').value) || 0,
         height: parseFloat(document.getElementById('height').value) || 0,
         weight: parseFloat(document.getElementById('weight').value) || 0,
-        
-        // Step 3
+        activityLevel: parseFloat(document.getElementById('activityLevel').value) || 1.2,
+
         desiredHeight: parseFloat(document.getElementById('desiredHeight').value) || 0,
         desiredWeight: parseFloat(document.getElementById('desiredWeight').value) || 0,
-        goalType: document.querySelector('.goal-group button.active').innerText,
+        goalType: document.getElementById('selectedGoal').value,
 
-        // Step 4: Lấy danh sách ID từ các tag đang hiển thị
         diseaseIds: Array.from(document.querySelectorAll('#diseaseContainer .tag'))
-                         .map(tag => parseInt(tag.getAttribute('data-id'))),
+            .map(t => parseInt(t.getAttribute('data-id'))),
+
         ingredientIds: Array.from(document.querySelectorAll('#allergyContainer .tag'))
-                            .map(tag => parseInt(tag.getAttribute('data-id')))
+            .map(t => parseInt(t.getAttribute('data-id')))
     };
 
-    console.log("Dữ liệu gửi đi:", registrationData);
+    console.log(data);
 
-    // Gửi API về AuthController
     fetch('/api/auth/register-complete', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(registrationData)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
     })
-    .then(response => {
-        if (response.ok) {
-            alert("Chúc mừng Thành! Bạn đã hoàn tất đăng ký thông tin sức khỏe.");
-            window.location.href = "/login"; // Chuyển hướng về trang đăng nhập
-        } else {
-            response.text().then(text => alert("Lỗi: " + text));
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Đã có lỗi xảy ra khi kết nối server.");
-    });
+        .then(res => {
+            if (res.ok) {
+                alert("Đăng ký thành công!");
+                window.location.href = "/login";
+            } else {
+                res.text().then(t => alert(t));
+            }
+        })
+        .catch(err => console.error(err));
 }

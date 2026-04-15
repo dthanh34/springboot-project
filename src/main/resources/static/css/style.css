@@ -26,9 +26,12 @@ body {
     padding: 0.5rem 1.5rem;
     border: 1px solid #d1d5db;
     border-radius: 0.5rem;
-    background: transparent;
+    background: #22c55e;
     cursor: pointer;
     transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    color: inherit;
 }
 .btn-secondary:hover { background-color: #f9fafb; }
 
@@ -41,8 +44,11 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    color: inherit;
 }
-.btn-primary:hover { background-color: #16a34a; }
+.btn-primary:hover { background-color: #f9fafb; }
 
 .hero-section {
     padding: 5rem 1rem;
