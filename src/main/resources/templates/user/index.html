@@ -63,45 +63,66 @@
             </div>
         </div>
 
+        <section class="filter-section">
+            <div class="filter-container">
+                <div class="mode-toggle">
+                    <span id="mode-label"> Chế độ ăn</span>
+                    <label class="switch">
+                        <input type="checkbox" id="meal-mode-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span id="mode-text">Ăn nhanh(Ăn tại quán )</span>
+                </div>
+
+                <div class="acute-disease-select">
+                    <select id="acute-diseases" multiple>
+                        <option value = "" >Hôm nay bạn cảm thấy cơ thể thế nào</option>
+                    </select>
+                </div>
+                <button id="btn-generate-meal" class="btn-confirm">Xác nhận</button>
+            </div>
+        </section>
+
         <section class="section">
-    <div class="section-header">
-        <h3>Bữa ăn hôm nay</h3>
-    </div>
-    <div class="meal-summary-row">
-        <div class="summary-item">
-            <div class="time-circle">07</div>
-            <div class="summary-info">
-                <span>Bữa sáng</span>
-                <p id="breakfast-target-calo">0 kcal</p>
+            <div class="section-header">
+                <h3>Bữa ăn hôm nay</h3>
             </div>
-        </div>
-        <div class="summary-item">
-            <div class="time-circle">12</div>
-            <div class="summary-info">
-                <span>Bữa trưa</span>
-                <p id="lunch-target-calo">0 kcal</p>
+            <div class="meal-summary-row">
+                <div class="summary-item">
+                    <div class="time-circle">07</div>
+                    <div class="summary-info">
+                        <span>Bữa sáng</span>
+                        <p id="breakfast-target-calo">0 kcal</p>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="time-circle">12</div>
+                    <div class="summary-info">
+                        <span>Bữa trưa</span>
+                        <p id="lunch-target-calo">0 kcal</p>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="time-circle">18</div>
+                    <div class="summary-info">
+                        <span>Bữa tối</span>
+                        <p id="dinner-target-calo">0 kcal</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="summary-item">
-            <div class="time-circle">18</div>
-            <div class="summary-info">
-                <span>Bữa tối</span>
-                <p id="dinner-target-calo">0 kcal</p>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="section">
-    <div class="section-header">
-        <h3>Gợi ý cho bạn</h3>
-    </div>
-    <div class="suggestion-grid">
-        <div id="suggestion-cards" class="card-container">
-             </div>
-    </div>
-</section>
-
+        <section class="section">
+            <div class="view-all-container">
+                <button id="btn-view-all" class="btn-outline">Xem tất cả món ăn phù hợp với bạn</button>
+            </div>
+            <div class="section-header">
+                <h3>Gợi ý cho bạn</h3>
+            </div>
+            <div class="suggestion-grid">
+                <div id="suggestion-cards" class="card-container"></div>
+            </div>
+        </section>
     </main>
 </div>
 <script th:src="@{js/user_dashboard.js}"></script>

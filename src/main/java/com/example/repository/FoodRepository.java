@@ -10,25 +10,13 @@ import java.util.List;
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
-    @Query(value = """
-    SELECT f.* FROM Food f
-    WHERE (
-        (:mealType = 1 AND f.is_breakfast = 1) -- Bữa sáng: Chỉ lấy món ăn sáng
-        OR (:mealType <> 1)                    -- Bữa trưa/tối: Lấy món nào cũng được
-    )
-    AND f.Food_id NOT IN (
-        -- Loại bỏ món gây bệnh cho User này
-        SELECT fd.Food_id FROM Food_disease fd
-        JOIN User_disease ud ON fd.Disease_id = ud.Disease_id
-        WHERE ud.User_id = :userId
-    )
-    AND f.Food_id NOT IN (
-        -- Loại bỏ món chứa nguyên liệu User bị dị ứng
-        SELECT fi.Food_id FROM Food_Ingredient fi
-        JOIN User_Allergy ua ON fi.Ingredient_id = ua.Ingredient_id
-        WHERE ua.User_id = :userId
-    )
-    ORDER BY NEWID() -- Lấy ngẫu nhiên để thực đơn mỗi ngày mỗi khác
-    """, nativeQuery = true)
-List<Food> findSmartCandidate(@Param("userId") Long userId, @Param("mealType") Integer mealType);
+    @Query(value = "SELECT f.* FROM Food f " +
+       "WHERE f.Food_id NOT IN (" +
+       "    SELECT DISTINCT fi.Food_id FROM Food_Ingredient fi " +
+       "    JOIN Ingredient_Disease idis ON fi.Ingredient_id = idis.Ingredient_id " +
+       "    WHERE idis.Disease_id IN (:allDiseaseIds) AND idis.Is_Kỵ = 1" +
+       ") " +
+       "AND (:dishType IS NULL OR f.dish_type = :dishType)", nativeQuery = true)
+List<Food> findSafeFoods(@Param("allDiseaseIds") List<Integer> allDiseaseIds, 
+                         @Param("dishType") Integer dishType);
 }

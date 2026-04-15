@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/diseases")
 @CrossOrigin
 
 
@@ -19,6 +19,12 @@ public class DiseaseController {
     @GetMapping("/diseases")
     public List<Disease> getAllDiseases(){
         return diseaseRepository.findAll();
+    }
+    @GetMapping("/acute")
+    public List<Disease> getAcuteDiseases() {
+        // Lấy danh sách các bệnh có type là 'Ngắn ngày'
+        // Thành nhớ check lại tên cột disease_type trong DB nhé
+        return diseaseRepository.findByDiseaseType("Ngắn ngày");
     }
 
 }
