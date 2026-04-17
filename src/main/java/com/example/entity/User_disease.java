@@ -18,4 +18,9 @@ public class User_disease {
     @ManyToOne
     @JoinColumn(name = "Disease_id")
     private Disease disease;
+     
+    private String level;
+    private String discoveryDate;
+    private String note;
+
 }

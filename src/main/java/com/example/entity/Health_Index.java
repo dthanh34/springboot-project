@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Health_Index {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,53 +25,5 @@ public class Health_Index {
 
     @Column(name = "calculated_at")
     private LocalDateTime calculatedAt = LocalDateTime.now();
-
-    public Integer getId() {
-        return Id;
-    }
-
-    public void setId(Integer id) {
-        Id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public float getBmi() {
-        return bmi;
-    }
-
-    public void setBmi(float bmi) {
-        this.bmi = bmi;
-    }
-
-    public float getBmr() {
-        return bmr;
-    }
-
-    public void setBmr(float bmr) {
-        this.bmr = bmr;
-    }
-
-    public float getTdee() {
-        return tdee;
-    }
-
-    public void setTdee(float tdee) {
-        this.tdee = tdee;
-    }
-
-    public LocalDateTime getCalculatedAt() {
-        return calculatedAt;
-    }
-
-    public void setCalculatedAt(LocalDateTime calculatedAt) {
-        this.calculatedAt = calculatedAt;
-    }
 
 }

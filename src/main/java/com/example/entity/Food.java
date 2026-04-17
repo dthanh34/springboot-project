@@ -43,4 +43,7 @@ public class Food {
     
     @Column(name = "is_breakfast")
     private Boolean isBreakfast;
+
+    @Column(name = "dish_type")
+    private Integer dishType;
 }

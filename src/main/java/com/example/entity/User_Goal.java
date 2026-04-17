@@ -1,7 +1,9 @@
 package com.example.entity;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "User_Goal")
 public class User_Goal {
     @Id
@@ -12,20 +14,9 @@ public class User_Goal {
     @JoinColumn(name="User_id")
     private User user;
 
-    private String Goal_type;
-    private float target_calories;
+    @Column(name="Goal_type")
+    private String goalType;
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    private float targetCalories;
 
-    public String getGoal_type() { return Goal_type ;}
-    public void setGoal_type(String Goal_type) { this.Goal_type = Goal_type ;}
-
-    public float getTarget_calories() { return target_calories;}
-    public void setTarget_calories(float target_calogies) { this.target_calories = target_calogies;}
-
-    public User getUser() { return user; }
-
-    public void setUser(User user) {this.user = user;}
-    
 }

@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DiseaseRepository extends JpaRepository<Disease, Integer> {
-    @Query(value = "SELECT * FROM Disease WHERE disease_type = N'Ngắn ngày'", nativeQuery = true)
-    List<Disease> findByDiseaseType(String type);
+    List<Disease> findByDiseaseType(String diseaseType);
 }

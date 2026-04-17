@@ -1,9 +1,13 @@
 package com.example.service;
 
+import com.example.dto.UserAllergyDTO;
+import com.example.dto.UserDiseaseDTO;
+import com.example.dto.UserProfileDTO;
 import com.example.dto.UserSessionDTO;
 import com.example.entity.*;
 import com.example.repository.*;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +41,8 @@ public class UserService {
         // 2. Lưu mục tiêu
         User_Goal goal = new User_Goal();
         goal.setUser(savedUser);
-        goal.setGoal_type(goalType);
-        goal.setTarget_calories(2000.0f);
+        goal.setGoalType(goalType);
+        goal.setTargetCalories(2000.0f);
         userGoalRepository.save(goal);
 
         // 3. Tính Health Index
@@ -86,7 +91,6 @@ public class UserService {
         }
     }
 
-    // ================= LOGIN =================
     public UserSessionDTO login(String name, String password) {
         return userRepository.findByName(name)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()))
@@ -109,8 +113,11 @@ public class UserService {
                 })
                 .orElse(null);
     }
+    public User findByName(String name) {
+    // Tìm user theo tên, nếu không thấy thì trả về null hoặc quăng lỗi tùy Thành nhé
+        return userRepository.findByName(name).orElse(null);
+    }
 
-    // ================= GET USER =================
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -119,7 +126,7 @@ public class UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    // ================= UPDATE =================
+
     @Transactional
     public Optional<User> updateHealthMetrics(Long id, float weight, float height, Integer age) {
         return userRepository.findById(id).map(user -> {
@@ -130,7 +137,6 @@ public class UserService {
         });
     }
 
-    // ================= DELETE =================
     @Transactional
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
@@ -138,5 +144,46 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public UserProfileDTO getUserProfile(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Khong tim thay nguoi dung"));
+        User_Goal userGoal = userGoalRepository.findByUser_Id(userId);
+
+        UserProfileDTO dto = new UserProfileDTO();
+        dto.setUserId(user.getId());
+        dto.setFullName(user.getName());
+        dto.setAge(user.getAge());
+        dto.setGender(user.getGender());
+        dto.setWeight(user.getWeight());
+        dto.setHeight(user.getHeight());
+        dto.setDesiredHeight(user.getDesiredHeight());
+        dto.setDesiredWeight(user.getDesiredWeight());
+        dto.setGoalType(userGoal.getGoalType());
+
+        List<UserDiseaseDTO> diseaseDTOs = userDiseaseRepository.findByUser_Id(userId)
+            .stream().map(ud -> {
+                UserDiseaseDTO dDto = new UserDiseaseDTO();
+                dDto.setId(ud.getId());
+                dDto.setDiseaseName(ud.getDisease().getDiseaseName());
+                dDto.setLevel(ud.getLevel());
+                dDto.setDiscoveryDate(ud.getDiscoveryDate().toString());
+                dDto.setNote(ud.getNote());
+                return dDto;
+            }).collect(Collectors.toList());
+        dto.setDisease(diseaseDTOs);
+
+        List<UserAllergyDTO> allergyDTOs = userAllergyRepository.findByUser_Id(userId)
+            .stream().map(ua -> {
+                UserAllergyDTO aDto = new UserAllergyDTO();
+                aDto.setId(ua.getId());
+                aDto.setIngredientName(ua.getIngredient().getIngredientName());
+                aDto.setReaction(ua.getReaction());
+                aDto.setNote(ua.getNote());
+                return aDto;
+            }).collect(Collectors.toList());
+            dto.setAllergy(allergyDTOs);
+
+            return dto;
     }
 }

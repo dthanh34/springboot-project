@@ -15,7 +15,6 @@ function login() {
 
     console.log("Dữ liệu gửi đi:", loginData);
 
-    // 2. Gọi API đến AuthController
     fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -25,24 +24,19 @@ function login() {
     })
     .then(response => {
         if (response.ok) {
-            return response.json(); // Đăng nhập thành công, nhận về UserSessionDTO
+            return response.json(); 
         } else {
-            // Nếu sai tài khoản hoặc mật khẩu (401 Unauthorized)
             throw new Error("Tên tài khoản hoặc mật khẩu không chính xác!");
         }
     })
     .then(data => {
-        // 3. Lưu thông tin người dùng vào localStorage để dùng cho các trang sau
         localStorage.setItem("user", JSON.stringify(data));
-
-        // 4. Kiểm tra Role để điều hướng (Redirect)
-        // Lưu ý: data.role lấy từ UserSessionDTO trong Java
         const role = data.role ? data.role.toUpperCase() : "USER";
 
         if (role === "ADMIN") {
             window.location.href = "/admin";
         } else {
-            window.location.href = "/user";
+            window.location.href = "/dashboard";
         }
     })
     .catch(error => {

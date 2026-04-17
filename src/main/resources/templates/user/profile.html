@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ sơ sức khỏe - Healthy Food</title>
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside th:replace="~{user/sidebar :: sidebar_fragment}"></aside>
+
+        <main class="main-content">
+            <div class="profile-header">
+                <h2>Hồ sơ sức khỏe</h2>
+                <p>Cập nhật thông tin để nhận gợi ý món ăn phù hợp nhất</p>
+            </div>
+
+            <div class="profile-form-container">
+                <div class="profile-card">
+                    <div class="card-title"><i class="fas fa-user"></i> Thông tin cá nhân</div>
+                    <div class="input-gird">
+                        <div class="input-item">
+                            <label>Họ và tên</label>
+                            <input type="text" id="fullName" class="form-input" placeholder="Nguyễn Văn A">
+                        </div>
+                        <div class="input-item">
+                            <label>Giới tính</label>
+                            <input type="text" id="gender" class="form-input" placeholder="Nam">
+                        </div>
+                        <div class="input-item">
+                            <label>Tuổi</label>
+                            <input type="number" id="age" class="form-input" placeholder="25">
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="card-title"><i class="fas fa-weight-scale"></i> Chỉ số cơ thể</div>
+                    <div class="input-grid">
+                        <div class="input-item">
+                            <label>Cân nặng (kg)</label>
+                            <input type="number" step="0.1" id="weight" class="form-input" placeholder="70">
+                        </div>
+                        <div class="input-item">
+                            <label>Chiều cao (cm)</label>
+                            <input type="number" id="height" class="form-input" placeholder="170">
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="card-title"><i class="fas fa-bullseye"></i> Mục tiêu sức khỏe</div>
+                    <div class="input-grid">
+                        <div class="input-item">
+                            <label>Mục tiêu</label>
+                            <input type="text" id="goalType" class="form-input" placeholder="Giảm cân">
+                        </div>
+                        <div class="input-item">
+                            <label>Cân nặng mong muốn (kg)</label>
+                            <input type="number" step="0.1" id="desiredWeight" class="form-input" placeholder="70">
+                        </div>
+                        <div class="input-item">
+                            <label>Chiều cao mong muốn (cm)</label>
+                            <input type="number" id="desiredHeight" class="form-input" placeholder="170">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="card-title">
+                        <i class="fas fa-hand-holding-medical"></i> Tình trạng bệnh lý
+                        <button class="btn-add-small" onclick="openModal('diseaseModal')">+ Thêm bệnh lý</button>
+                    </div>
+                    <div id="disease-list" class="tag-container">
+                        <span class="placeholder-text">Đang tải dữ liệu bệnh lý...</span>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="card-title">
+                        <i class="fas fa-exclamation-triangle"></i> Dị ứng thực phẩm
+                        <button class="btn-add-small" onclick="openModal('allergyModal')">+ Thêm dị ứng</button>
+                    </div>
+                    <div id="allergy-list" class="tag-container">
+                        <span class="placeholder-text">Đang tải dữ liệu dị ứng...</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="saveAllProfile()">Lưu tất cả hồ sơ</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="diseaseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm tình trạng bệnh lý</h3>
+                <span class="close-btn" onclick="closeModal('diseaseModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="input-item">
+                    <label>Bệnh lý</label>
+                    <select id="disease-select" class="form-input">
+                        <option value="">Chọn bệnh lý</option>
+                        <option value="Tiểu đường">Tiểu đường</option>
+                        <option value="Dạ dày">Dạ dày</option>
+                        <option value="Gout">Gout</option>
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>Mức độ</label>
+                    <select id="disease-level" class="form-input">
+                        <option value="Nhẹ">Nhẹ</option>
+                        <option value="Trung bình">Trung bình</option>
+                        <option value="Nặng">Nặng</option>
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>Thời gian phát hiện</label>
+                    <input type="date" id="discovery-date" class="form-input">
+                </div>
+                <div class="input-item">
+                    <label>Ghi chú</label>
+                    <textarea id="disease-note" class="form-input" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary-large" onclick="addDiseaseTag()">+ Thêm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="allergyModal" class="modal">
+        <div class="modal-content mini">
+            <div class="modal-header">
+                <h3>Thêm thực phẩm dị ứng</h3>
+                <span class="close-btn" onclick="closeModal('allergyModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="search-wrapper">
+                    <input type="text" id="searchAllergy" placeholder="Tìm tên thực phẩm..." class="form-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div id="allergy-suggestions" class="selection-grid">
+                    <div class="select-item" onclick="addAllergyTag('Hải sản')">Hải sản</div>
+                    <div class="select-item" onclick="addAllergyTag('Đậu phộng')">Đậu phộng</div>
+                    <div class="select-item" onclick="addAllergyTag('Sữa')">Sữa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/profile.js}"></script>
+    <script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>

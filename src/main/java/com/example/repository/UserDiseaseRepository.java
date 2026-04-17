@@ -12,4 +12,6 @@ public interface UserDiseaseRepository extends JpaRepository<User_disease, Integ
 
     @Query(value = "SELECT disease_id FROM User_disease WHERE user_id = :userId", nativeQuery = true)
     List<Integer> findDiseaseIdsByUserId(@Param("userId") Long userId);
+
+    List<User_disease>  findByUser_Id(Long id);
 }

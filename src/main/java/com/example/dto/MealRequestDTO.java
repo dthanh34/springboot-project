@@ -6,6 +6,6 @@ public class MealRequestDTO {
     private Long userId;
     private boolean isFamilyMeal;
     private Double tdee;
-    private List<Integer> acuteDiseaseIds; // Danh sách ID bệnh ngắn ngày
-    // Getter và Setter
+    private List<Integer> acuteDiseaseIds; 
+    
 }

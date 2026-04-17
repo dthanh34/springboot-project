@@ -7,42 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
 <body>
-    <div class="dashboard-container">
-    <aside class="sidebar">
-        <div class="logo-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/188/188333.png" alt="Logo">
-            <span>Healthy Food</span>
-        </div>
-        <nav class="menu">
-            <a href="#" class="active"><i class="fas fa-home"></i> Trang chủ</a>
-            <a href="#"><i class="fas fa-user-circle"></i> Hồ sơ sức khỏe</a>
-            <a href="#"><i class="fas fa-utensils"></i> Món ăn</a>
-            <a href="#"><i class="fas fa-calendar-alt"></i> Thực đơn</a>
-            <a href="#"><i class="fa-solid fa-chart-line"></i>Tiến trình</a>
-            <a href="#"><i class="fa-regular fa-heart"></i>Yêu thích</a>  
-            <a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm</a>
-            <a href="#"><i class="fa-solid fa-gear"></i>Cài đặt</a>     
-            </nav>
-        <div class="logout-box">
-            <a href="/login" onclick="localStorage.clear()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        </div>
-    </aside>
+<div class="dashboard-container">
+    <aside th:replace="~{user/sidebar :: sidebar_fragment}"></aside>
 
     <main class="main-content">
         <header class="header">
             <div class="welcome">
-                <h1 id="user-name">Xin chào, ...</h1>
+                <h1 id="user-name"></h1>
                 <p>Chúc bạn một ngày tốt lành!</p>
             </div>
-            <button class="btn-add">+ Thêm bữa ăn</button>
         </header>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <p class="stat-label">Calo mục tiêu/ngày</p>
-                <h2 id="tdee-value">0</h2>
+                <h2 id="tdee-value">0 kcal</h2>
                 <div class="progress-bar"><div class="fill" style="width: 0%"></div></div>
                 <small>Dựa trên TDEE của bạn</small>
             </div>
@@ -64,67 +46,44 @@
         </div>
 
         <section class="filter-section">
-            <div class="filter-container">
-                <div class="mode-toggle">
-                    <span id="mode-label"> Chế độ ăn</span>
-                    <label class="switch">
-                        <input type="checkbox" id="meal-mode-toggle">
-                        <span class="slider round"></span>
-                    </label>
-                    <span id="mode-text">Ăn nhanh(Ăn tại quán )</span>
-                </div>
-
-                <div class="acute-disease-select">
-                    <select id="acute-diseases" multiple>
-                        <option value = "" >Hôm nay bạn cảm thấy cơ thể thế nào</option>
+            <div class="filter-container" style="display: flex; gap: 20px; align-items: center; background: #fff; padding: 20px; border-radius: 15px;">
+                <div class="meal-count-config">
+                    <label>Số bữa ăn:</label>
+                    <select id="meal-count-select" class="form-control" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
+                        <option value="3">3 bữa (Sáng - Trưa - Tối)</option>
+                        <option value="4">4 bữa (Sáng - Trưa - Phụ - Tối)</option>
+                        <option value="2">2 bữa (Sáng - Tối)</option>
                     </select>
                 </div>
-                <button id="btn-generate-meal" class="btn-confirm">Xác nhận</button>
+                <div class="filter-item disease-picker">
+                    <label class="disease-label">Hôm nay cơ thể bạn cảm thấy thế nào?</label>
+                    <div id="disease-chip-picker" class="disease-chips-group"></div>
+                </div>
+                <button id="btn-update-safe-foods" class="btn-confirm" style="background: #2ecc71; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+                    Cập nhật thực đơn an toàn
+                </button>
             </div>
         </section>
 
         <section class="section">
-            <div class="section-header">
-                <h3>Bữa ăn hôm nay</h3>
-            </div>
-            <div class="meal-summary-row">
-                <div class="summary-item">
-                    <div class="time-circle">07</div>
-                    <div class="summary-info">
-                        <span>Bữa sáng</span>
-                        <p id="breakfast-target-calo">0 kcal</p>
-                    </div>
+            <h3>Kế hoạch ăn uống hôm nay</h3>
+            <div id="meal-planner-container" class="meal-planner-row">
                 </div>
-                <div class="summary-item">
-                    <div class="time-circle">12</div>
-                    <div class="summary-info">
-                        <span>Bữa trưa</span>
-                        <p id="lunch-target-calo">0 kcal</p>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="time-circle">18</div>
-                    <div class="summary-info">
-                        <span>Bữa tối</span>
-                        <p id="dinner-target-calo">0 kcal</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="view-all-container">
-                <button id="btn-view-all" class="btn-outline">Xem tất cả món ăn phù hợp với bạn</button>
-            </div>
-            <div class="section-header">
-                <h3>Gợi ý cho bạn</h3>
-            </div>
-            <div class="suggestion-grid">
-                <div id="suggestion-cards" class="card-container"></div>
-            </div>
         </section>
     </main>
 </div>
-<script th:src="@{js/user_dashboard.js}"></script>
+
+<div id="foodModal" class="modal">
+    <div class="modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            <h3>Chọn món ăn phù hợp</h3>
+            <span onclick="closeModal()" style="cursor:pointer; font-size:28px;">&times;</span>
+        </div>
+        <div id="modal-food-list" class="food-grid-selection"></div>
+    </div>
+</div>
+
+<script th:src="@{/js/user_dashboard.js}"></script>
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

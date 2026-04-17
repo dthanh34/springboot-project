@@ -24,8 +24,12 @@ public class WebController {
         return "admin/index";
     }
 
-    @GetMapping("/user")
-    public String userPage() {
-        return "user/index";
+    @GetMapping("/profile")
+    public String userProfile(){
+        return "user/profile";
+    }
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "user/index"; 
     }
 }

@@ -16,14 +16,12 @@ import java.util.List;
 public class DiseaseController {
     @Autowired
     private DiseaseRepository diseaseRepository ;
-    @GetMapping("/diseases")
+    @GetMapping("/diseases") // lấy danh sách bệnh
     public List<Disease> getAllDiseases(){
         return diseaseRepository.findAll();
     }
-    @GetMapping("/acute")
+    @GetMapping("/acute") // lấy danh sách bệnh ngắn ngày
     public List<Disease> getAcuteDiseases() {
-        // Lấy danh sách các bệnh có type là 'Ngắn ngày'
-        // Thành nhớ check lại tên cột disease_type trong DB nhé
         return diseaseRepository.findByDiseaseType("Ngắn ngày");
     }
 

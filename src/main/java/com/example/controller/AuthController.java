@@ -24,7 +24,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    // 1. API Đăng nhập (Giữ nguyên của bạn)
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO request, HttpServletRequest servletRequest) {
         UserSessionDTO user = userService.login(request.getName(), request.getPassword());
@@ -46,7 +46,7 @@ public class AuthController {
         return ResponseEntity.ok(user);
     }
 
-    // 2. API Đăng ký hoàn tất (Đã tối ưu dùng DTO)
+    //  API Đăng ký hoàn tất
     @PostMapping("/register-complete")
     public ResponseEntity<?> completeRegistration(@RequestBody UserRegisterDTO dto) {
         try {
@@ -64,7 +64,7 @@ public class AuthController {
             user.setDesiredHeight(dto.getDesiredHeight().floatValue());
             user.setDesiredWeight(dto.getDesiredWeight().floatValue());
 
-            // Gọi UserService thực hiện lưu liên hoàn (Đã có thêm activityLevel)
+           
             userService.completeRegistration(
                 user, 
                 dto.getGoalType(), 

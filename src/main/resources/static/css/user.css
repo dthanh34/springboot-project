@@ -15,84 +15,6 @@ body {
 }
 
 
-.dashboard-container {
-    display: grid;
-    grid-template-columns: 260px 1fr; 
-    min-height: 100vh;
-}
-
-
-.sidebar {
-    background-color: var(--dark-green);
-    color: var(--white);
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-}
-
-.logo-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.logo-box img {
-    width: 35px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex-grow: 1;
-}
-
-.menu a {
-    color: #b2beb5;
-    text-decoration: none;
-    padding: 12px 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: 0.3s;
-}
-
-.menu a:hover, .menu a.active {
-    background-color: var(--primary-green);
-    color: white;
-}
-
-.logout-box {
-    border-top: 1px solid #455a50;
-    padding-top: 20px;
-    color : white;
-}
-.logout-box a, 
-.logout-box a:visited {
-    color: white !important; 
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: 0.3s;
-    font-weight: 500;
-}
-
-.logout-box a:hover {
-    color: #ff4d4d !important;
-    transform: translateX(5px); 
-}
-
-.logout-box a i {
-    color: inherit; 
-}
 .main-content {
     padding: 40px;
     overflow-y: auto;
@@ -236,7 +158,7 @@ body {
 .meal-thumb {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Quan trọng: giúp ảnh không bị méo */
+    object-fit: cover; 
 }
 
 .meal-info {
@@ -270,7 +192,7 @@ body {
 }
 
 .summary-item {
-    background: #eef9f1; /* Màu xanh nhạt như ảnh */
+    background: #eef9f1;
     padding: 15px;
     border-radius: 12px;
     display: flex;
@@ -309,7 +231,6 @@ body {
     height: 150px;
     object-fit: cover;
 }
-/* Container cho bộ lọc */
 .filter-section {
     background: #ffffff;
     padding: 20px;
@@ -325,7 +246,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Nút gạt Switch */
 .switch {
     position: relative;
     display: inline-block;
@@ -351,7 +271,7 @@ body {
 input:checked + .slider { background-color: #2ecc71; }
 input:checked + .slider:before { transform: translateX(26px); }
 
-/* Ô chọn bệnh */
+
 #acute-diseases {
     padding: 8px;
     border-radius: 6px;
@@ -359,7 +279,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     min-width: 250px;
 }
 
-/* Nút bấm */
 .btn-confirm {
     background: #2ecc71;
     color: white;
@@ -371,3 +290,426 @@ input:checked + .slider:before { transform: translateX(26px); }
 }
 
 .btn-confirm:hover { background: #27ae60; }
+
+.meal-planner-row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.meal-slot {
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+}
+
+.meal-slot:hover {
+    border-color: #2ecc71;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.1);
+}
+
+.selected-items-container {
+    flex: 1;
+    margin: 0 20px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 0;
+}
+
+.food-chip {
+    background: #f0fff4;
+    color: #2f855a;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    border: 1px solid #c6f6d5;
+    animation: fadeIn 0.3s ease;
+}
+
+.food-chip i {
+    cursor: pointer;
+    color: #e53e3e;
+    font-size: 14px;
+}
+
+.food-chip i:hover {
+    color: #c53030;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 25px;
+    width: 70%;
+    max-height: 80vh;
+    border-radius: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    position: relative;
+    overflow-y: auto;
+}
+
+.food-grid-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.food-card-selection {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.food-card-selection:hover {
+    transform: translateY(-5px);
+    border-color: #2ecc71;
+    background: #f9fffb;
+}
+
+.food-card-selection img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.btn-add {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background 0.3s;
+}
+
+.btn-add:hover {
+    background: #27ae60;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .meal-slot { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .selected-items-container { margin: 10px 0; width: 100%; }
+    .modal-content { width: 90%; margin: 10% auto; }
+}
+.disease-picker-container {
+    flex: 1;
+    min-width: 300px;
+}
+
+.disease-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.disease-chips-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.disease-chip {
+    padding: 8px 18px;
+    background: #edf2f7;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #4a5568;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    user-select: none;
+    font-weight: 500;
+}
+
+.disease-chip:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+.disease-chip.selected {
+    background: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+    box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);
+}
+
+.disease-chip.healthy {
+    border: 1px solid #3498db;
+}
+
+.disease-chip.healthy.selected {
+    background: #3498db;
+    border-color: #2980b9;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+.meal-planner-row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.meal-slot {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.meal-slot:hover {
+    border-color: #2ecc71;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.selected-items-container {
+    flex: 1;
+    margin: 0 20px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 0;
+    scrollbar-width: thin; 
+}
+
+.selected-items-container::-webkit-scrollbar {
+    height: 4px;
+}
+.selected-items-container::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 4px;
+}
+
+.food-chip {
+    background: #f0fff4;
+    color: #276749;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    border: 1px solid #c6f6d5;
+    animation: slideIn 0.3s ease-out;
+}
+
+.food-chip i {
+    cursor: pointer;
+    color: #e53e3e;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 4% auto;
+    padding: 25px;
+    width: 75%;
+    max-height: 85vh;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    overflow-y: auto;
+}
+
+.food-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.food-card-selection {
+    background: #fff;
+    border: 1px solid #edf2f7;
+    border-radius: 16px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.food-card-selection:hover {
+    border-color: #2ecc71;
+    background: #f9fffb;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(46, 204, 113, 0.1);
+}
+
+.food-card-selection img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.food-card-selection p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.food-card-selection small {
+    color: #718096;
+    font-weight: 500;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.meal-slot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+}
+
+.selected-items-container {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    margin: 0 20px;
+    overflow-x: auto; 
+}
+
+
+.food-grid-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 10px;
+}
+
+.selected-items-container {
+    display: flex;
+    gap: 15px;
+    padding: 10px 5px;
+    overflow-x: auto; 
+}
+
+.selected-food-card {
+    min-width: 160px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.selected-food-card img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+}
+
+.selected-food-card .food-info {
+    padding: 8px;
+    text-align: center;
+}
+
+.selected-food-card h4 {
+    font-size: 14px;
+    margin: 0;
+    color: #333;
+}
+
+.selected-food-card p {
+    font-size: 12px;
+    color: #666;
+    margin: 4px 0;
+}
+
+.btn-detail {
+    display: block;
+    text-decoration: none;
+    background: #f8f9fa;
+    color: #2ecc71;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    padding: 6px 0;
+    border-top: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.btn-detail:hover {
+    background: #eefdf3;
+}
+
+.btn-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    color: #e74c3c;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}

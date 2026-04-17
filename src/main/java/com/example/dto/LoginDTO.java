@@ -1,9 +1,9 @@
 package com.example.dto;
+import lombok.Data;
+@Data
 
 public class LoginDTO {
     private String name;
     private String password;
 
-    public String getName() { return name; }
-    public String getPassword() { return password; }
 }

@@ -1,0 +1,16 @@
+<aside th:fragment="sidebar_fragment" class="sidebar">
+    <div class="logo-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/188/188333.png" alt="Logo">
+        <span>Healthy Food</span>
+    </div>
+    <nav class="menu">
+        <a th:href="@{/dashboard}" class="active"><i class="fas fa-home"></i> Trang chủ</a>
+        <a th:href="@{/profile}"><i class="fas fa-user-circle"></i> Hồ sơ sức khỏe</a>
+        <a th:href="@{/foods}"><i class="fas fa-utensils"></i> Món ăn</a>
+        <a th:href="@{/menu}"><i class="fas fa-calendar-alt"></i> Thực đơn</a>
+        <a th:href="@{/progress}"><i class="fa-solid fa-chart-line"></i> Tiến trình</a>
+    </nav>
+    <div class="logout-box">
+        <a href="/login" onclick="localStorage.clear()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+    </div>
+</aside>

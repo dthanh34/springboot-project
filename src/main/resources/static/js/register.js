@@ -18,8 +18,6 @@ let selectedIngredients = new Set();
 let diseaseData = [];
 let selectedDiseases = new Set();
 
-
-// ================= STEP =================
 function showStep(step) {
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
     document.getElementById(`step-${step}`).classList.add('active');
@@ -40,25 +38,18 @@ function prevStep(step) {
     showStep(step - 1);
 }
 
-
-// ================= LOAD =================
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.goal-group button').forEach(btn => {
     btn.addEventListener('click', function () {
-
-        // bỏ active tất cả
         document.querySelectorAll('.goal-group button')
             .forEach(b => b.classList.remove('active'));
 
-        // set active cho cái vừa click
         this.classList.add('active');
 
-        // cập nhật giá trị hidden
         document.getElementById('selectedGoal').value = this.dataset.value;
     });
     });
 
-    // ===== BUTTON ADD ALLERGY =====
     document.getElementById('btnAddAllergy').onclick = () => {
         document.getElementById('ingredientModal').classList.remove('hidden');
 
@@ -71,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err));
     };
 
-    // ===== BUTTON ADD DISEASE =====
     document.getElementById('btnAddDisease').onclick = () => {
         document.getElementById('diseaseModal').classList.remove('hidden');
 
@@ -84,11 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err));
     };
 
-    // ===== CONFIRM =====
     document.getElementById('btnConfirmIngredient').onclick = confirmIngredient;
     document.getElementById('btnConfirmDisease').onclick = confirmDisease;
 
-    // ===== SEARCH =====
     document.getElementById('searchIngredient').oninput = function () {
         const k = this.value.toLowerCase();
         renderIngredientList(
@@ -104,8 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 });
 
-
-// ================= RENDER =================
 function renderIngredientList(list) {
     const container = document.getElementById('ingredientList');
     container.innerHTML = '';
@@ -160,8 +146,6 @@ function renderDiseaseList(list) {
     });
 }
 
-
-// ================= CONFIRM =================
 function confirmIngredient() {
     const container = document.getElementById('allergyContainer');
     container.innerHTML = '';
@@ -206,8 +190,6 @@ function confirmDisease() {
     closeDiseaseModal();
 }
 
-
-// ================= REMOVE =================
 function removeTag(el) {
     const tag = el.parentElement;
     const id = parseInt(tag.getAttribute('data-id'));
@@ -218,8 +200,6 @@ function removeTag(el) {
     tag.remove();
 }
 
-
-// ================= MODAL =================
 function closeModal() {
     document.getElementById('ingredientModal').classList.add('hidden');
 }
@@ -228,8 +208,6 @@ function closeDiseaseModal() {
     document.getElementById('diseaseModal').classList.add('hidden');
 }
 
-
-// ================= SUBMIT =================
 function submitForm() {
     const data = {
         name: document.getElementById('name').value,

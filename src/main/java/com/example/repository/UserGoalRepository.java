@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserGoalRepository extends JpaRepository<User_Goal, Integer> {
+    User_Goal findByUser_Id(Long UserId);
 }
