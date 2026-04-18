@@ -16,11 +16,11 @@ import java.util.List;
 public class DiseaseController {
     @Autowired
     private DiseaseRepository diseaseRepository ;
-    @GetMapping("/diseases") // lấy danh sách bệnh
+    @GetMapping("/diseases") 
     public List<Disease> getAllDiseases(){
         return diseaseRepository.findAll();
     }
-    @GetMapping("/acute") // lấy danh sách bệnh ngắn ngày
+    @GetMapping("/acute") 
     public List<Disease> getAcuteDiseases() {
         return diseaseRepository.findByDiseaseType("Ngắn ngày");
     }

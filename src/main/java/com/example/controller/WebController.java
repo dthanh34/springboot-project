@@ -32,4 +32,13 @@ public class WebController {
     public String dashboard() {
         return "user/index"; 
     }
+    @GetMapping("/menu")
+    public String menu(){
+        return "user/menu";
+    }
+    @GetMapping("/foods")
+    public String foods(){
+        return "user/foods";
+    }
+    
 }

@@ -32,20 +32,15 @@ public class UserService {
 
     @Transactional
     public void completeRegistration(User user, String goalType, List<Integer> diseaseIds, List<Integer> ingredientIds,Float activityLevel) {
-
-        // 1. Lưu user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
         User savedUser = userRepository.save(user);
-
-        // 2. Lưu mục tiêu
         User_Goal goal = new User_Goal();
         goal.setUser(savedUser);
         goal.setGoalType(goalType);
         goal.setTargetCalories(2000.0f);
         userGoalRepository.save(goal);
 
-        // 3. Tính Health Index
         Health_Index healthIndex = new Health_Index();
         healthIndex.setUser(savedUser);
 
@@ -64,7 +59,6 @@ public class UserService {
 
         healthIndexRepository.save(healthIndex);
 
-        // 4. Lưu disease
         if (diseaseIds != null && !diseaseIds.isEmpty()) {
 
             List<Disease> diseases = diseaseRepository.findAllById(diseaseIds);
@@ -77,7 +71,6 @@ public class UserService {
             }
         }
 
-        // 5. Lưu allergy (ingredient)
         if (ingredientIds != null && !ingredientIds.isEmpty()) {
 
             List<Ingredient> ingredients = ingredientRepository.findAllById(ingredientIds);
@@ -114,7 +107,6 @@ public class UserService {
                 .orElse(null);
     }
     public User findByName(String name) {
-    // Tìm user theo tên, nếu không thấy thì trả về null hoặc quăng lỗi tùy Thành nhé
         return userRepository.findByName(name).orElse(null);
     }
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthyFood AI - Quản lý dinh dưỡng thông minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/foods.css}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside th:replace="~{user/sidebar :: sidebar_fragment}"></aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Gợi ý món ăn phù hợp</h1>
+                <p>Khám phá các món ăn phù hợp với sức khỏe của bạn</p>
+            </header>
+
+            <section class="summary-info">
+                <p id="food-count-text">Đang tải danh sách món ăn...</p>
+            </section>
+
+            <div id="food-grid" class="food-grid">
+                </div>
+        </main>
+    </div>
+     
+    <script th:src="@{/js/foods.js}"></script>
+    <script th:src="@{/js/sidebar.js}"></script>
+
+</body>
+</html>

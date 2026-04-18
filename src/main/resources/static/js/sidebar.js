@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     menuLinks.forEach(link => {
         const linkPath = new URL(link.href).pathname;
 
-        // So sánh với URL hiện tại
         if (currentPath === linkPath) {
             link.classList.add("active");
         } else {

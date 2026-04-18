@@ -1,0 +1,162 @@
+.calendar-wrapper {
+    background: #fff;
+    padding: 15px 5px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.calendar-wrapper::-webkit-scrollbar {
+    display: none; 
+}
+
+.calendar-scroll {
+    display: flex;
+    gap: 12px;
+    padding: 0 10px;
+}
+
+.date-item {
+    min-width: 60px;
+    height: 80px;
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.date-item span {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.date-item strong {
+    font-size: 18px;
+    color: #333;
+    margin-top: 4px;
+}
+
+.date-item.active {
+    background: #2ecc71 !important;
+    border-color: #2ecc71;
+    color: #fff !important;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+}
+
+.date-item.active span, .date-item.active strong {
+    color: #fff !important;
+}
+
+.calo-summary {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+    transition: width 0.5s ease-in-out;
+}
+
+.meal-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.meal-box h3 {
+    margin: 0 0 15px 0;
+    font-size: 17px;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+}
+
+.meal-box h3::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: #2ecc71;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.food-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #fbfbfb;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-item img {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.food-item .food-info .name {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.food-item .food-info .cal {
+    font-size: 13px;
+    color: #2ecc71;
+    margin-top: 2px;
+}
+.calendar-scroll {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.btn-nav-week {
+    border: none;
+    background: #fff;
+    color: #2ecc71;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-nav-week:hover {
+    background: #2ecc71;
+    color: #fff;
+}
+
+.date-item {
+    flex: 1; 
+    max-width: 60px;
+}

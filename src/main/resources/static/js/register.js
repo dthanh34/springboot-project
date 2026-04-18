@@ -40,14 +40,13 @@ function prevStep(step) {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.goal-group button').forEach(btn => {
-    btn.addEventListener('click', function () {
-        document.querySelectorAll('.goal-group button')
-            .forEach(b => b.classList.remove('active'));
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.goal-group button')
+                .forEach(b => b.classList.remove('active'));
 
-        this.classList.add('active');
-
-        document.getElementById('selectedGoal').value = this.dataset.value;
-    });
+            this.classList.add('active');
+            document.getElementById('selectedGoal').value = this.dataset.value;
+        });
     });
 
     document.getElementById('btnAddAllergy').onclick = () => {
@@ -80,14 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('searchIngredient').oninput = function () {
         const k = this.value.toLowerCase();
         renderIngredientList(
-            ingredientData.filter(i => i.ingredient_name.toLowerCase().includes(k))
+            ingredientData.filter(i => (i.ingredientName || i.ingredient_name).toLowerCase().includes(k))
         );
     };
-
     document.getElementById('searchDisease').oninput = function () {
         const k = this.value.toLowerCase();
         renderDiseaseList(
-            diseaseData.filter(i => i.disease_name.toLowerCase().includes(k))
+            diseaseData.filter(i => (i.diseaseName || i.disease_name).toLowerCase().includes(k))
         );
     };
 });
@@ -98,19 +96,19 @@ function renderIngredientList(list) {
 
     list.forEach(item => {
         const div = document.createElement('div');
-        div.innerText = item.ingredient_name;
-        div.dataset.id = item.ingredient_id;
+        div.innerText = item.ingredientName;
+        div.dataset.id = item.ingredientId;
 
-        if (selectedIngredients.has(item.ingredient_id)) {
+        if (selectedIngredients.has(item.ingredientId)) {
             div.classList.add('active');
         }
 
         div.onclick = () => {
-            if (selectedIngredients.has(item.ingredient_id)) {
-                selectedIngredients.delete(item.ingredient_id);
+            if (selectedIngredients.has(item.ingredientId)) {
+                selectedIngredients.delete(item.ingredientId);
                 div.classList.remove('active');
             } else {
-                selectedIngredients.add(item.ingredient_id);
+                selectedIngredients.add(item.ingredientId);
                 div.classList.add('active');
             }
         };
@@ -125,19 +123,19 @@ function renderDiseaseList(list) {
 
     list.forEach(item => {
         const div = document.createElement('div');
-        div.innerText = item.disease_name;
-        div.dataset.id = item.disease_id;
+        div.innerText = item.diseaseName;
+        div.dataset.id = item.diseaseId;
 
-        if (selectedDiseases.has(item.disease_id)) {
+        if (selectedDiseases.has(item.diseaseId)) {
             div.classList.add('active');
         }
 
         div.onclick = () => {
-            if (selectedDiseases.has(item.disease_id)) {
-                selectedDiseases.delete(item.disease_id);
+            if (selectedDiseases.has(item.diseaseId)) {
+                selectedDiseases.delete(item.diseaseId);
                 div.classList.remove('active');
             } else {
-                selectedDiseases.add(item.disease_id);
+                selectedDiseases.add(item.diseaseId);
                 div.classList.add('active');
             }
         };
@@ -151,18 +149,17 @@ function confirmIngredient() {
     container.innerHTML = '';
 
     selectedIngredients.forEach(id => {
-        const item = ingredientData.find(i => i.ingredient_id == id);
-
-        const tag = document.createElement('div');
-        tag.className = 'tag';
-        tag.setAttribute('data-id', id);
-
-        tag.innerHTML = `
-            ${item.ingredient_name}
-            <span onclick="removeTag(this)">x</span>
-        `;
-
-        container.appendChild(tag);
+        const item = ingredientData.find(i => i.ingredientId == id);
+        if (item) {
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.setAttribute('data-id', id);
+            tag.innerHTML = `
+                ${item.ingredientName}
+                <span onclick="removeIngredientTag(this)">x</span>
+            `;
+            container.appendChild(tag);
+        }
     });
 
     closeModal();
@@ -173,30 +170,33 @@ function confirmDisease() {
     container.innerHTML = '';
 
     selectedDiseases.forEach(id => {
-        const item = diseaseData.find(i => i.disease_id == id);
-
-        const tag = document.createElement('div');
-        tag.className = 'tag';
-        tag.setAttribute('data-id', id);
-
-        tag.innerHTML = `
-            ${item.disease_name}
-            <span onclick="removeTag(this)">x</span>
-        `;
-
-        container.appendChild(tag);
+        const item = diseaseData.find(i => i.diseaseId == id);
+        if (item) {
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.setAttribute('data-id', id);
+            tag.innerHTML = `
+                ${item.diseaseName}
+                <span onclick="removeDiseaseTag(this)">x</span>
+            `;
+            container.appendChild(tag);
+        }
     });
 
     closeDiseaseModal();
 }
 
-function removeTag(el) {
+function removeIngredientTag(el) {
     const tag = el.parentElement;
     const id = parseInt(tag.getAttribute('data-id'));
-
     selectedIngredients.delete(id);
-    selectedDiseases.delete(id);
+    tag.remove();
+}
 
+function removeDiseaseTag(el) {
+    const tag = el.parentElement;
+    const id = parseInt(tag.getAttribute('data-id'));
+    selectedDiseases.delete(id);
     tag.remove();
 }
 
@@ -231,20 +231,23 @@ function submitForm() {
             .map(t => parseInt(t.getAttribute('data-id')))
     };
 
-    console.log(data);
+    console.log("Dữ liệu gửi đi:", data);
 
     fetch('/api/auth/register-complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-        .then(res => {
-            if (res.ok) {
-                alert("Đăng ký thành công!");
-                window.location.href = "/login";
-            } else {
-                res.text().then(t => alert(t));
-            }
-        })
-        .catch(err => console.error(err));
+    .then(res => {
+        if (res.ok) {
+            alert("Đăng ký hành trình sức khỏe thành công!");
+            window.location.href = "/login";
+        } else {
+            res.text().then(t => alert("Lỗi: " + t));
+        }
+    })
+    .catch(err => {
+        console.error("Lỗi kết nối:", err);
+        alert("Không thể kết nối tới máy chủ.");
+    });
 }

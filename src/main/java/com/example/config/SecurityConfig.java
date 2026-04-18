@@ -25,11 +25,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Quan trọng để Fetch API hoạt động
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
                 .requestMatchers(PUBLIC_URLS).permitAll()
                 .requestMatchers("/user/profile").permitAll() 
+                .requestMatchers("/menu").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/foods").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/user/profile-data").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().authenticated()
             )

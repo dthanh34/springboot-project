@@ -46,7 +46,7 @@
         </div>
 
         <section class="filter-section">
-            <div class="filter-container" style="display: flex; gap: 20px; align-items: center; background: #fff; padding: 20px; border-radius: 15px;">
+            <div class="filter-container" style="display: flex; gap: 20px; align-items: center; background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                 <div class="meal-count-config">
                     <label>Số bữa ăn:</label>
                     <select id="meal-count-select" class="form-control" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
@@ -59,14 +59,19 @@
                     <label class="disease-label">Hôm nay cơ thể bạn cảm thấy thế nào?</label>
                     <div id="disease-chip-picker" class="disease-chips-group"></div>
                 </div>
-                <button id="btn-update-safe-foods" class="btn-confirm" style="background: #2ecc71; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+                <button id="btn-update-safe-foods" class="btn-confirm" style="background: #2ecc71; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">
                     Cập nhật thực đơn an toàn
                 </button>
             </div>
         </section>
 
         <section class="section">
-            <h3>Kế hoạch ăn uống hôm nay</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Kế hoạch ăn uống hôm nay</h3>
+                <button id="btn-save-daily-plan" class="btn-save-main" style="background: #3498db; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);">
+                    <i class="fas fa-save"></i> Lưu thực đơn hôm nay
+                </button>
+            </div>
             <div id="meal-planner-container" class="meal-planner-row">
                 </div>
         </section>

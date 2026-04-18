@@ -22,7 +22,6 @@ public class UserController {
             return ResponseEntity.status(401).body("Chưa đăng nhập!");
         }
 
-        // Lấy name của người đang đăng nhập
         String name = auth.getName();
         User user = userService.findByName(name);
 

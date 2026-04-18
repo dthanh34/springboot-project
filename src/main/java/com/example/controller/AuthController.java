@@ -46,19 +46,15 @@ public class AuthController {
         return ResponseEntity.ok(user);
     }
 
-    //  API Đăng ký hoàn tất
     @PostMapping("/register-complete")
     public ResponseEntity<?> completeRegistration(@RequestBody UserRegisterDTO dto) {
         try {
-            // Khởi tạo User và map dữ liệu từ DTO
             User user = new User();
             user.setName(dto.getName());
             user.setEmail(dto.getEmail());
             user.setPassword(dto.getPassword());
             user.setAge(dto.getAge());
             user.setGender(dto.getGender());
-            
-            // Map các chỉ số cơ thể
             user.setWeight(dto.getWeight().floatValue());
             user.setHeight(dto.getHeight().floatValue());
             user.setDesiredHeight(dto.getDesiredHeight().floatValue());

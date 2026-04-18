@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthyFood AI - Theo dõi thực đơn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside th:replace="~{user/sidebar :: sidebar_fragment}"></aside>
+        
+        <main class="main-content">
+            <div class="menu-inner-container" style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+                
+                <div class="header" style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                    <button onclick="window.history.back()" style="border: none; background: none; cursor: pointer; font-size: 20px;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <h1 style="margin: 0; font-size: 24px;">Thực đơn</h1>
+                </div>
+
+                <div class="calendar-wrapper">
+                    <div class="calendar-scroll" id="calendar-list">
+                        </div>
+                </div>
+
+                <div class="calo-summary">
+                    <div class="calo-info" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>Tổng năng lượng trong ngày</span>
+                        <strong id="total-day-calories">0 kcal</strong>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="calo-progress" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="meal-list" id="meal-content">
+                    </div>
+            </div>
+        </main>
+    </div>
+
+    <script th:src="@{/js/sidebar.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+</body>
+</html>
