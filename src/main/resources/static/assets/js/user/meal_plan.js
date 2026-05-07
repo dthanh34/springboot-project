@@ -15,6 +15,7 @@ $(document).ready(function() {
     async function fetchMealPlan() {
         try {
             const response = await fetch(`/api/user/meal-plan?date=${selectedDate}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
 
             // Cập nhật giao diện
@@ -25,6 +26,8 @@ $(document).ready(function() {
             renderMealSections(data.mealSections, data.canEdit);
         } catch (err) {
             console.error("Lỗi tải thực đơn:", err);
+             $("#week-slider-container").html(`<p class="empty-text">Không tải được dữ liệu tuần.</p>`);
+            $("#meal-sections-container").html(`<p class="empty-text">Không tải được thực đơn. Vui lòng tải lại trang.</p>`);
         }
     }
 

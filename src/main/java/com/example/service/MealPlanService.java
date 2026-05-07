@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.time.format.TextStyle;
 import java.util.stream.Collectors;
 
 @Service
@@ -163,27 +164,47 @@ public class MealPlanService {
         res.put("totalCalories", (menu != null) ? menu.getTotalCalories() : 0.0);
         res.put("canEdit", !date.isBefore(LocalDate.now()));
         
-        // Giả lập slider tuần (Thành có thể viết thêm logic lấy 7 ngày quanh date)
-        res.put("weekSlider", new ArrayList<>()); 
+        res.put("weekSlider", buildWeekSlider(userId, date));
         
         // Trả về các bữa ăn (Sáng, Trưa, Tối...)[cite: 17]
         res.put("mealSections", getMealSections(menu));
         
         return res;
     }
+    public List<Map<String, Object>> getAllFoodsSimple() {
+        return foodRepo.findAll().stream().map(food -> {
+            Map<String, Object> f = new HashMap<>();
+            f.put("id", food.getFoodId());
+            f.put("name", food.getFoodName());
+            f.put("calories", food.getCalories() == null ? 0.0 : food.getCalories());
+            return f;
+        }).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void removeMealDetail(Long userId, Integer detailId) {
+        MenuDetail detail = menuDetailRepo.findById(detailId).orElse(null);
+        if (detail == null) return;
+        DailyMenu menu = dailyMenuRepo.findById(detail.getMenuId()).orElse(null);
+        if (menu == null || menu.getUserId() != userId.intValue()) return;
+        menuDetailRepo.deleteByDetailId(detailId);
+        updateTotalCalories(menu);
+    }
 
     // 4. Hàm điều chỉnh món ăn trong bữa (Nâng cao từ addFoodToMenu)[cite: 17]
     @Transactional
     public void updateUserMeal(Long userId, Map<String, Object> payload) {
         LocalDate date = LocalDate.parse((String) payload.get("date"));
-        Integer mealTypeId = (Integer) payload.get("mealTypeId");
-        List<Integer> foodIds = (List<Integer>) payload.get("foodIds");
-
+        Integer mealTypeId = Integer.valueOf(payload.get("mealTypeId").toString());
+        List<Integer> foodIds = ((List<?>) payload.get("foodIds")).stream()
+                .map(v -> Integer.valueOf(v.toString()))
+                .collect(Collectors.toList());
         DailyMenu menu = dailyMenuRepo.findByUserIdAndMenuDate(userId.intValue(), date)
             .orElseGet(() -> {
                 DailyMenu nm = new DailyMenu();
                 nm.setUserId(userId.intValue());
                 nm.setMenuDate(date);
+                nm.setStatus("Pending");
                 return dailyMenuRepo.save(nm);
             });
 
@@ -199,6 +220,21 @@ public class MealPlanService {
         }
 
         updateTotalCalories(menu);
+    }
+    private List<Map<String, Object>> buildWeekSlider(Long userId, LocalDate selectedDate) {
+        LocalDate start = selectedDate.minusDays(3);
+        List<Map<String, Object>> days = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            LocalDate d = start.plusDays(i);
+            Map<String, Object> item = new HashMap<>();
+            item.put("date", d.toString());
+            item.put("dow", d.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("vi", "VN")));
+            item.put("day", d.getDayOfMonth());
+            item.put("selected", d.equals(selectedDate));
+            item.put("hasMeals", dailyMenuRepo.findByUserIdAndMenuDate(userId.intValue(), d).isPresent());
+            days.add(item);
+        }
+        return days;
     }
 
     // --- HÀM BỔ TRỢ (PRIVATE) ---
@@ -220,6 +256,41 @@ public class MealPlanService {
 
     private List<Map<String, Object>> getMealSections(DailyMenu menu) {
         
-        return new ArrayList<>(); 
+        List<Map<String, Object>> sections = new ArrayList<>();
+        Map<Integer, String> mealTypes = Map.of(1, "Bữa sáng", 2, "Bữa trưa", 3, "Bữa tối", 4, "Bữa phụ");
+        Map<Integer, List<MenuDetail>> grouped = new HashMap<>();
+        if (menu != null) {
+            grouped = menuDetailRepo.findByMenuId(menu.getMenuId()).stream()
+                    .collect(Collectors.groupingBy(MenuDetail::getMealTypeId));
+        }
+
+        for (Map.Entry<Integer, String> mt : mealTypes.entrySet()) {
+            List<MenuDetail> details = grouped.getOrDefault(mt.getKey(), new ArrayList<>());
+            List<Map<String, Object>> foods = new ArrayList<>();
+            double usedCalories = 0.0;
+            List<String> foodIds = new ArrayList<>();
+            for (MenuDetail d : details) {
+                Food f = foodRepo.findById(d.getFoodId()).orElse(null);
+                if (f == null) continue;
+                Map<String, Object> item = new HashMap<>();
+                item.put("detailId", d.getDetailId());
+                item.put("foodId", f.getFoodId());
+                item.put("foodName", f.getFoodName());
+                item.put("imageUrl", f.getImageUrl());
+                item.put("calories", f.getCalories() == null ? 0.0 : f.getCalories());
+                foods.add(item);
+                usedCalories += f.getCalories() == null ? 0.0 : f.getCalories();
+                foodIds.add(String.valueOf(f.getFoodId()));
+            }
+            Map<String, Object> section = new HashMap<>();
+            section.put("mealTypeId", mt.getKey());
+            section.put("mealName", mt.getValue());
+            section.put("foods", foods);
+            section.put("usedCalories", usedCalories);
+            section.put("targetCalories", 0.0);
+            section.put("foodIdsString", String.join(",", foodIds));
+            sections.add(section);
+        }
+        return sections;
     }
 }

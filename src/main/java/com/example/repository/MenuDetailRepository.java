@@ -18,4 +18,9 @@ public interface MenuDetailRepository extends JpaRepository<MenuDetail, Integer>
     @Transactional
     @Query("DELETE FROM MenuDetail md WHERE md.menuId = ?1 AND md.mealTypeId = ?2")
     void deleteByMenuIdAndMealTypeId(Integer menuId, Integer mealTypeId);
+
+     @Modifying
+    @Transactional
+    @Query("DELETE FROM MenuDetail md WHERE md.detailId = ?1")
+    void deleteByDetailId(Integer detailId);
 }
