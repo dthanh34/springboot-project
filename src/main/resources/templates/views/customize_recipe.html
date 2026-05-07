@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Điều chỉnh công thức - Healthy Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/customize_recipe.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Điều chỉnh công thức theo ý mình</h2>
+        
+        <div id="alert-error" class="alert-error" style="display: none;"></div>
+
+        <form id="customForm">
+            <input type="hidden" id="foodId" name="foodId">
+            
+            <div class="row-flex">
+                <div class="col-flex">
+                    <label>Tên món ăn</label>
+                    <input type="text" id="foodNameDisplay" class="input-soft" readonly>
+                </div>
+                
+                <div class="col-flex">
+                    <label>Dinh dưỡng tạm tính:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="macro-box bg-green">
+                            <span>Calo</span>
+                            <input type="text" id="displayCalo" readonly value="0">
+                        </div>
+                        <div class="macro-box bg-amber">
+                            <span>Fat (g)</span>
+                            <input type="text" id="displayFat" readonly value="0">
+                        </div>
+                        <div class="macro-box bg-blue">
+                            <span>Protein (g)</span>
+                            <input type="text" id="displayProtein" readonly value="0">
+                        </div>
+                        <div class="macro-box bg-red">
+                            <span>Carbs (g)</span>
+                            <input type="text" id="displayCarbs" readonly value="0">
+                        </div>
+                    </div>
+
+                    <!-- Hidden inputs để gửi data về server -->
+                    <input type="hidden" id="calculatedCalories" name="calculatedCalories">
+                    <input type="hidden" id="calculatedFat" name="calculatedFat">
+                    <input type="hidden" id="calculatedProtein" name="calculatedProtein">
+                    <input type="hidden" id="calculatedCarbs" name="calculatedCarbs">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <div class="header-flex">
+                    <label style="margin: 0;">Nguyên liệu</label>
+                    <button type="button" class="btn-add" id="btnAddIngredient">
+                        <i class="fa-solid fa-plus"></i> Thêm nguyên liệu
+                    </button>
+                </div>
+                
+                <div id="ingredient-container">
+                    <p id="no-data-msg" style="color: #9ca3af; font-style: italic; text-align: center; padding: 20px; display: none;">
+                        Chưa có nguyên liệu. Hãy bấm "Thêm nguyên liệu" để bắt đầu!
+                    </p>
+                    <!-- Danh sách nguyên liệu render tại đây -->
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label>Công thức</label>
+                <textarea id="recipeText" name="recipeText" class="textarea-bordered" rows="6" placeholder="Nếu không điền các bước nấu sẽ giữ nguyên....."></textarea>
+            </div>
+
+            <div class="bottom-actions">
+                <button type="button" class="btn-back" onclick="window.history.back()">
+                    <i class="fa-solid fa-arrow-left"></i> Quay lại
+                </button>
+                <button type="submit" class="btn-save">
+                    <i class="fa-regular fa-floppy-disk"></i> Lưu thay đổi
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Template cho việc thêm dòng nguyên liệu mới (Ẩn) -->
+    <template id="ingredient-template">
+        <div class="ingredient-item">
+            <select class="input-soft name-select" name="ingredientId">
+                <option value="" disabled selected>-- Chọn nguyên liệu --</option>
+            </select>
+            <input type="number" class="qty-input" value="100" name="ingredientQty" data-calo="0" data-fat="0" data-protein="0" data-carbs="0"> 
+            <span>gram</span>
+            <button type="button" class="btn-trash"><i class="fa-regular fa-trash-can"></i></button>
+        </div>
+    </template>
+
+    <div id="toast"></div>
+
+    <script src="/assets/js/user/customize_recipe.js"></script>
+</body>
+</html>

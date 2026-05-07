@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa thực đơn cá nhân - Healthy Food</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/home.css"> <!-- Dùng css của user -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .custom-card { background: #fff; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-top: 20px; }
+        .macro-badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .macro-item { text-align: center; padding: 10px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .macro-item label { display: block; font-size: 12px; color: #64748b; margin-bottom: 5px; }
+        .macro-item input { width: 100%; border: none; background: transparent; text-align: center; font-weight: bold; color: #1e293b; outline: none; }
+        .ing-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 12px; align-items: center; }
+        .btn-remove { color: #ef4444; background: #fef2f2; border: none; width: 35px; height: 35px; border-radius: 8px; cursor: pointer; }
+        .btn-add-ing { background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng cá nhân</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/home" class="nav-link"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+            <li class="nav-item"><a href="/meal_plan" class="nav-link active"><i class="fa-solid fa-utensils"></i> Thực đơn của tôi</a></li>
+            <li class="nav-item"><a href="/progress" class="nav-link"><i class="fa-solid fa-chart-line"></i> Tiến trình</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Tùy chỉnh món ăn</h1>
+            <p>Điều chỉnh nguyên liệu để phù hợp với mục tiêu calo của bạn</p>
+        </div>
+
+        <form id="userEditFoodForm">
+            <input type="hidden" id="foodId" name="foodId">
+            
+            <div class="custom-card">
+                <div id="alert-box"></div>
+
+                <div class="form-group">
+                    <label>Tên món ăn</label>
+                    <input type="text" id="foodName" class="form-control" readonly style="background: #f1f5f9;">
+                </div>
+
+                <!-- Hiển thị dinh dưỡng động -->
+                <div class="macro-badge-grid">
+                    <div class="macro-item">
+                        <label>Tổng Calo</label>
+                        <input type="number" id="totalCal" readonly>
+                    </div>
+                    <div class="macro-item">
+                        <label>Protein (g)</label>
+                        <input type="number" id="totalPro" readonly>
+                    </div>
+                    <div class="macro-item">
+                        <label>Chất béo (g)</label>
+                        <input type="number" id="totalFat" readonly>
+                    </div>
+                    <div class="macro-item">
+                        <label>Carbs (g)</label>
+                        <input type="number" id="totalCarb" readonly>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <h3 style="font-size: 16px;">Nguyên liệu sử dụng</h3>
+                    <button type="button" class="btn-add-ing" id="btnAddRow"><i class="fa-solid fa-plus"></i> Thêm</button>
+                </div>
+
+                <div id="ingredient-container">
+                    <!-- Dữ liệu render từ JS -->
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Ghi chú cách nấu riêng của bạn</label>
+                    <textarea id="recipe" class="form-control" rows="4" placeholder="Ví dụ: Cho ít muối, không cho hành..."></textarea>
+                </div>
+
+                <div style="margin-top:30px; text-align: right;">
+                    <a href="/meal_plan" style="margin-right: 15px; color: #64748b; text-decoration: none;">Quay lại</a>
+                    <button type="submit" class="btn-primary" style="background: #10b981; color: white; padding: 12px 30px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;">
+                        Lưu vào thực đơn
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- Template row cho JS -->
+    <template id="ing-row-template">
+        <div class="ing-row">
+            <select class="form-control ing-select">
+                <option value="">Chọn nguyên liệu</option>
+            </select>
+            <input type="number" class="form-control ing-qty" step="0.1" min="0.1" placeholder="Lượng">
+            <select class="form-control ing-unit">
+                <option value="g">g</option>
+                <option value="ml">ml</option>
+            </select>
+            <button type="button" class="btn-remove"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </template>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/assets/js/user/edit_food.js"></script>
+</body>
+</html>

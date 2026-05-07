@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tổng quan Admin - Healthy Food</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng thông minh</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/dashboard" class="nav-link active"><i class="fa-solid fa-table-cells-large"></i> Tổng quan</a></li>
+            <li class="nav-item"><a href="/admin/manage_users" class="nav-link"><i class="fa-regular fa-address-book"></i> Quản lý người dùng</a></li>
+            <li class="nav-item"><a href="/admin/manage_food" class="nav-link"><i class="fa-solid fa-utensils"></i> Quản lý món ăn</a></li>
+            <li class="nav-item"><a href="/admin/manage_ingredient" class="nav-link"><i class="fa-solid fa-apple-whole"></i> Quản lý nguyên liệu</a></li>
+            <li class="nav-item"><a href="/admin/manage_disease" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> Quản lý bệnh lý</a></li>
+            <li class="nav-item"><a href="/admin/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box"><a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a></div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-title" style="margin-bottom: 30px;">
+            <h1>Tổng quan</h1>
+            <p>Chào mừng trở lại, <span id="admin-name">Admin</span>!</p>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Thẻ Tổng người dùng -->
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h4>Tổng số người dùng</h4>
+                    <h2 id="total-users">0</h2>
+                    <p id="user-growth-container">
+                        <span id="user-growth-val">0%</span> <span>So với tháng trước</span>
+                    </p>
+                </div>
+                <div class="stat-icon bg-blue"><i class="fa-solid fa-users"></i></div>
+            </div>
+            
+            <!-- Thẻ Tổng món ăn -->
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h4>Tổng món ăn</h4>
+                    <h2 id="total-foods">0</h2>
+                    <p id="food-growth-container">
+                        <span id="food-growth-val">0%</span> <span>So với tháng trước</span>
+                    </p>
+                </div>
+                <div class="stat-icon bg-green"><i class="fa-solid fa-utensils"></i></div>
+            </div>
+            
+            <!-- Thẻ Tổng thực đơn -->
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h4>Tổng thực đơn được tạo</h4>
+                    <h2 id="total-menus">0</h2>
+                    <p id="menu-growth-container">
+                        <span id="menu-growth-val">0%</span> <span>So với tháng trước</span>
+                    </p>
+                </div>
+                <div class="stat-icon bg-green"><i class="fa-regular fa-calendar-check"></i></div>
+            </div>
+            
+            <!-- Hoạt động ngày -->
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h4>Hoạt động/ngày</h4>
+                    <h2 id="today-activities">0</h2>
+                </div>
+                <div class="stat-icon bg-red"><i class="fa-solid fa-chart-line"></i></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3 class="chart-title">Thống kê đăng nhập 10 ngày qua</h3>
+                <div style="height: 300px; width: 100%;">
+                    <canvas id="loginChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">Người dùng đăng ký mới (Năm nay)</h3>
+                <div style="height: 300px; width: 100%;">
+                    <canvas id="registerChart"></canvas>
+                </div>
+            </div>
+        </div>
+                    
+        <div class="bottom-grid">
+            <div class="list-card">
+                <h3>Top món ăn được yêu thích</h3>
+                <div id="top-foods-list">
+                    <!-- JS render -->
+                </div>
+            </div>
+
+            <div class="list-card">
+                <h3>Mục tiêu phổ biến</h3>
+                <div id="popular-goals-list">
+                    <!-- JS render -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/admin/dashboard.js"></script>
+</body>
+</html>

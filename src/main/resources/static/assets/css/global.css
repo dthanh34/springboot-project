@@ -1,0 +1,83 @@
+:root {
+    --primary-green: #10b981;
+    --sidebar-bg: #273b30;
+    --bg-light: #f8fafc;
+    --text-dark: #111827;
+    --text-gray: #6b7280;
+    --nav-text: #a1b0a6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Cấu trúc Brand/Logo từ trang User cũ */
+.brand {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    text-decoration: none;
+}
+
+.brand-icon {
+    background-color: var(--primary-green);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.brand-text h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+
+.brand-text span {
+    display: block;
+    font-size: 11px;
+    color: var(--nav-text);
+}
+
+/* Sidebar đồng bộ màu #273b30 */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    z-index: 100;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    color: var(--nav-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: white;
+    border-left: 4px solid var(--primary-green);
+}

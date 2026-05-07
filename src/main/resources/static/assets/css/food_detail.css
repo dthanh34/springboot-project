@@ -1,0 +1,184 @@
+/* ===== Tổng thể ===== */
+.main-content {
+    margin-left: 250px;   /* đẩy sang phải đúng bằng sidebar */
+    padding: 40px;
+    width: calc(100% - 250px); /* trừ phần sidebar */
+    box-sizing: border-box;
+}
+
+/* ===== Ảnh hero ===== */
+.hero-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease;
+}
+.hero-image:hover {
+    transform: scale(1.02);
+}
+
+/* ===== Section ===== */
+.section {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    transition: 0.25s;
+}
+.section:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== Title ===== */
+.section-title {
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #ecfdf5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ===== Macro (dinh dưỡng) ===== */
+.macro-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.macro-box {
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+    transition: 0.25s;
+}
+.macro-box:hover {
+    transform: translateY(-3px);
+}
+
+.macro-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.macro-label {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ===== Ingredient grid ===== */
+.ingredient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.ing-item {
+    background: linear-gradient(135deg, #f9fdfb, #f1fdf6);
+    padding: 14px 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e6f4ea;
+    transition: 0.25s;
+}
+.ing-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.ing-name {
+    font-weight: 500;
+    color: #374151;
+}
+
+.ing-qty {
+    background: #10b981;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* ===== Button ===== */
+.action-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.25s;
+}
+
+.btn-like {
+    background: white;
+    border: 1px solid #ddd;
+}
+.btn-like:hover {
+    background: #f9fafb;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+}
+.btn-add:hover {
+    opacity: 0.9;
+}
+
+/* Favorite active */
+.btn-like.is-favorite {
+    background: #fee2e2;
+    color: #dc2626;
+    border-color: #fca5a5;
+}
+
+/* ===== Recipe ===== */
+#foodRecipe {
+    line-height: 1.8;
+    color: #333;
+    font-size: 15px;
+}
+
+/* ===== Toast ===== */
+.favorite-toast {
+    position: fixed;
+    right: 28px;
+    bottom: 24px;
+    background: #dc2626;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    transition: opacity 0.4s ease;
+    z-index: 999;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .macro-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ingredient-grid {
+        grid-template-columns: 1fr;
+    }
+}

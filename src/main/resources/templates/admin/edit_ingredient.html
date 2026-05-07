@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa nguyên liệu - Healthy Food</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/add_ingredient.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng thông minh</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="fa-solid fa-table-cells-large"></i> Tổng quan</a></li>
+            <li class="nav-item"><a href="/admin/manage_users" class="nav-link"><i class="fa-regular fa-address-book"></i> Quản lý người dùng</a></li>
+            <li class="nav-item"><a href="/admin/manage_food" class="nav-link"><i class="fa-solid fa-utensils"></i> Quản lý món ăn</a></li>
+            <li class="nav-item"><a href="/admin/manage_ingredient" class="nav-link active"><i class="fa-solid fa-apple-whole"></i> Quản lý nguyên liệu</a></li>
+            <li class="nav-item"><a href="/admin/manage_disease" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> Quản lý bệnh lý</a></li>
+            <li class="nav-item"><a href="/admin/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box"><a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a></div>
+    </aside>
+
+    <main class="main-content">
+        <div class="add-form-wrapper">
+            <div class="add-form-card">
+                <a href="/admin/manage_ingredient" class="close-btn">&times;</a>
+                
+                <div class="form-title">
+                    <h2>Sửa nguyên liệu</h2>
+                    <p>Cập nhật lại thông tin định danh và chỉ số dinh dưỡng</p>
+                </div>
+
+                <form id="editIngredientForm">
+                    <!-- ID ẩn để API biết cần sửa bản ghi nào -->
+                    <input type="hidden" id="ingId" name="id">
+                    
+                    <div class="form-group">
+                        <label>Tên nguyên liệu</label>
+                        <input type="text" id="ingName" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phân loại</label>
+                        <select id="ingCategory" name="category" class="form-control" required>
+                            <option value="Thit">Thịt</option>
+                            <option value="Hai san">Hải sản</option>
+                            <option value="Rau cu">Rau củ</option>
+                            <option value="Ngu coc">Ngũ cốc</option>
+                            <option value="Trung">Trứng</option>
+                            <option value="Sua">Sữa</option>
+                            <option value="Noi tang">Nội tạng</option>
+                            <option value="Nam">Nấm</option>
+                            <option value="Tinh bot">Tinh bột</option>
+                            <option value="Gia vi">Gia vi</option>
+                            <option value="Hat">Hạt</option>
+                            <option value="Trai cay">Trái cây</option>
+                            <option value="Che pham">Chế phẩm</option>
+                            <option value="Topping">Topping</option>
+                            <option value="Rau song">Rau sống</option>
+                            <option value="Nen dung">Nền dùng</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Chỉ số dinh dưỡng (Tính trên 100g)</label>
+                        <div class="macro-grid">
+                            <div>
+                                <input type="number" step="0.1" min="0" id="ingCal" name="calories" class="form-control" required>
+                                <small style="color: #9ca3af;">Calo</small>
+                            </div>
+                            <div>
+                                <input type="number" step="0.1" min="0" id="ingPro" name="protein" class="form-control" required>
+                                <small style="color: #9ca3af;">Protein (g)</small>
+                            </div>
+                            <div>
+                                <input type="number" step="0.1" min="0" id="ingFat" name="fat" class="form-control" required>
+                                <small style="color: #9ca3af;">Fat (g)</small>
+                            </div>
+                            <div>
+                                <input type="number" step="0.1" min="0" id="ingCarb" name="carbs" class="form-control" required>
+                                <small style="color: #9ca3af;">Carbs (g)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="margin-top: 30px;">
+                        <a href="/admin/manage_ingredient" class="btn-cancel">Hủy</a>
+                        <button type="submit" class="btn-save">Cập nhật thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/admin/edit_ingredient.js"></script>
+</body>
+</html>

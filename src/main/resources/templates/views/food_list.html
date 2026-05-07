@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gợi ý món ăn - Healthy Food</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/food_list.css">
+</head>
+<body style="display: flex; margin: 0;">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text">
+                <h2>Healthy Food</h2>
+                <span>Dinh dưỡng thông minh</span>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/home" class="nav-link"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fa-regular fa-user"></i> Hồ sơ sức khỏe</a></li>
+            <li class="nav-item"><a href="/foods" class="nav-link active"><i class="fa-solid fa-utensils"></i> Món ăn</a></li>
+            <li class="nav-item"><a href="/meal_plan" class="nav-link"><i class="fa-regular fa-calendar-days"></i> Thực đơn</a></li>
+            <li class="nav-item"><a href="/progress" class="nav-link"><i class="fa-solid fa-chart-line"></i> Tiến trình</a></li>
+            <li class="nav-item"><a href="/favorites" class="nav-link"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
+            <li class="nav-item"><a href="/search" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a></li>
+            <li class="nav-item"><a href="/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box">
+            <a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <h1>Gợi ý món ăn phù hợp</h1>
+        <p class="sub-text">
+            Khám phá các món ăn phù hợp với sức khỏe của bạn<br><br>
+            <span id="food-count-text">Đang tìm kiếm món ăn phù hợp cho bạn...</span>
+        </p>
+
+        <div class="grid" id="food-grid">
+            <!-- Dữ liệu sẽ được JS render tại đây -->
+        </div>
+    </main>
+
+    <!-- Thông báo Toast -->
+    <div id="toast" style="display: none;">
+        <i class="fa-solid fa-circle-check"></i> Đã lưu công thức thành công!
+    </div>
+
+    <script src="/assets/js/user/food_list.js"></script>
+</body>
+</html>

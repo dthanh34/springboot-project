@@ -1,0 +1,67 @@
+.meal-page { max-width: 980px; }
+.meal-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+.meal-header h1 { font-size:30px; margin-bottom:4px; }
+.meal-header p { color:#6b7280; font-size:14px; }
+.calo-badge { background:#dcfce7; color:#166534; padding:10px 16px; border-radius:10px; font-size:13px; display:flex; gap:8px; align-items:center; font-weight:600; }
+
+.card { background:#fff; border-radius:12px; border:1px solid #e5e7eb; padding:16px; margin-bottom:16px; }
+.slider-card { display:flex; align-items:center; gap:12px; }
+.slider-nav { width:30px; height:30px; border-radius:999px; border:1px solid #d1d5db; display:flex; align-items:center; justify-content:center; text-decoration:none; color:#111827; }
+.week-track { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; width:100%; }
+.day-pill { border:1px solid #e5e7eb; border-radius:10px; padding:10px 8px; text-decoration:none; color:#111827; display:flex; flex-direction:column; align-items:center; gap:3px; }
+.day-pill .dow { font-size:11px; color:#6b7280; }
+.day-pill strong { font-size:16px; }
+.day-pill.active { background:#16a34a; color:#fff; border-color:#16a34a; }
+.day-pill.active .dow { color:#dcfce7; }
+.day-pill .dot { width:7px; height:7px; border-radius:999px; background:transparent; }
+.day-pill .dot.has-meal { background:#22c55e; }
+.day-pill.active .dot.has-meal { background:#fff; }
+
+.filter-card { margin-bottom:18px; }
+.date-form { display:flex; align-items:end; gap:12px; }
+.date-form label { font-size:13px; color:#374151; font-weight:600; }
+.date-form input { border:1px solid #d1d5db; border-radius:8px; padding:10px 12px; }
+
+.meal-row-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.meal-title { display:flex; align-items:center; gap:8px; font-weight:600; }
+.meal-title i { color:#16a34a; }
+.meal-meta { font-size:12px; color:#6b7280; display:flex; gap:8px; align-items:center; }
+.text-btn { border:1px solid #d1d5db; background:#fff; border-radius:6px; padding:4px 10px; font-size:12px; cursor:pointer; }
+.food-pill { display:flex; align-items:center; gap:10px; background:#dcfce7; border-radius:8px; padding:10px; margin-bottom:10px; }
+.food-pill img { width:34px; height:34px; border-radius:50%; object-fit:cover; }
+.food-pill h4 { font-size:13px; margin:0; }
+.food-pill p { font-size:12px; color:#6b7280; margin:2px 0 0; }
+.empty-text { color:#9ca3af; font-size:13px; font-style:italic; }
+.add-wrapper { text-align:right; margin-top:10px; }
+.remove-form { margin-left:auto; }
+.remove-btn { border:none; background:transparent; cursor:pointer; font-size:16px; color:#64748b; }
+
+.modal { position:fixed; inset:0; background:rgba(15,23,42,.4); display:none; align-items:center; justify-content:center; z-index:999; }
+.modal.show { display:flex; }
+.modal-card { width:420px; background:#fff; border-radius:12px; padding:24px; position:relative; }
+.modal-card h3 { text-align:center; margin:8px 0 18px; font-size:20px; }
+.close-modal { position:absolute; top:12px; right:12px; border:none; background:transparent; cursor:pointer; font-size:16px; }
+.adjust-modal-card { width:500px; max-height:88vh; overflow-y:auto; }
+
+.form-group { margin-bottom:12px; }
+.form-group label { display:block; font-size:13px; margin-bottom:6px; color:#374151; }
+.form-group input, .form-group select { width:100%; border:1px solid #d1d5db; border-radius:8px; padding:10px 12px; }
+.multi-select { min-height:160px; }
+.btn-save, .btn-secondary { border:none; border-radius:7px; padding:10px 16px; font-weight:600; cursor:pointer; font-size:13px; }
+.btn-save { background:#16a34a; color:#fff; display:block; margin:0 auto; min-width:120px; }
+.btn-secondary { background:#16a34a; color:#fff; }
+.actions-row { display:flex; justify-content:flex-end; }
+
+.adjust-search { display:flex; align-items:center; border:1px solid #bbf7d0; border-radius:12px; padding:0 8px 0 12px; margin-bottom:12px; }
+.adjust-search input { width:100%; border:none; outline:none; background:transparent; padding:11px 0; font-size:14px; }
+.adjust-search button { border:none; background:transparent; color:#111827; cursor:pointer; width:34px; height:34px; border-radius:8px; }
+.adjust-search-result { border:1px solid #e5e7eb; border-radius:10px; padding:8px; margin-bottom:14px; background:#fff; max-height:170px; overflow-y:auto; }
+.search-food-item { width:100%; border:none; background:#f9fafb; border-radius:8px; padding:8px 10px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; font-size:13px; }
+.search-food-item:last-child { margin-bottom:0; }
+.search-food-item small { color:#6b7280; }
+
+.adjust-selected-header { display:flex; align-items:center; justify-content:space-between; margin:4px 0 10px; }
+.adjust-selected-header h4 { margin:0; font-size:30px; font-weight:700; }
+.adjust-selected-header span { font-size:15px; color:#1f2937; }
+.adjust-selected-list { min-height:170px; margin-bottom:24px; }
+.adjust-selected-list .food-pill { margin-bottom:8px; }

@@ -1,0 +1,68 @@
+/* ========================================================
+   FILE: register.css - DÀNH RIÊNG CHO ĐĂNG KÝ MULTI-STEP
+   ======================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #eafaf1; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px 0;}
+
+/* Giao diện khung cơ bản */
+.login-container { background-color: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); text-align: center; margin: auto;}
+.logo-icon { width: 60px; height: 60px; background-color: #2ecc71; border-radius: 50%; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; }
+.logo-icon svg { width: 30px; height: 30px; stroke: white; stroke-width: 2; }
+.login-title { font-size: 24px; color: #333; margin-bottom: 8px; font-weight: 600; }
+.login-subtitle { font-size: 14px; color: #888; margin-bottom: 30px; }
+.text-left { text-align: left !important; }
+
+/* Các ô nhập liệu cơ bản */
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; font-size: 14px; color: #333; margin-bottom: 8px; font-weight: 500; }
+.input-group input[type="text"], .input-group input[type="email"], .input-group input[type="password"], .input-group input[type="number"], select.form-control {
+    width: 100%; padding: 12px 15px; background-color: #f5f6f8; border: 1px solid transparent; border-radius: 8px; font-size: 14px; outline: none; transition: 0.3s;
+}
+.input-group input:focus, select.form-control:focus { border-color: #2ecc71; background-color: #fff; }
+select.form-control { cursor: pointer; }
+
+/* Ẩn hiện các bước (Multi-step) */
+.step-container { display: none; animation: fadeIn 0.3s ease-in-out; }
+.step-container.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Thanh tiến trình (Progress Bar) */
+.progress-bar { display: flex; gap: 8px; margin-bottom: 25px; justify-content: center; }
+.progress-step { height: 4px; width: 60px; background-color: #e0e0e0; border-radius: 2px; transition: 0.3s;}
+.progress-step.active { background-color: #2ecc71; }
+
+/* Chia cột (Form-row) */
+.form-row { display: flex; gap: 15px; margin-bottom: 20px; }
+.form-row .input-group { margin-bottom: 0; flex: 1; }
+
+/* Cụm Nút bấm phía dưới */
+.btn-login { width: 100%; padding: 14px; background-color: #2ecc71; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+.btn-login:hover { background-color: #27ae60; }
+.btn-footer { display: flex; gap: 15px; margin-top: 10px; }
+.btn-back { width: 35%; padding: 12px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.btn-back:hover { background-color: #f5f5f5; }
+.btn-next-step { width: 65%; padding: 12px; background-color: #2ecc71 !important; color: white !important; border: none !important; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; display: inline-block; }
+.btn-next-step:hover { background-color: #27ae60 !important; }
+
+/* Link Đăng nhập và Báo lỗi */
+.register-link { margin-top: 25px; font-size: 14px; color: #888; }
+.register-link a { color: #2ecc71; text-decoration: none; font-weight: 600; }
+.msg { padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; font-weight: 500; }
+.error-msg { background-color: #fadbd8; color: #e74c3c; border: 1px solid #e74c3c; }
+.error-border { border: 1px solid #e74c3c !important; }
+.error-text { color: #e74c3c; font-size: 12px; margin-top: 5px; display: none; }
+
+/* Radio Button chọn Mục tiêu (Giảm cân, Duy trì...) */
+.radio-group { display: flex; gap: 10px; margin-top: 5px; }
+.radio-group label { flex: 1; text-align: center; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 13px; color: #555; transition: 0.3s; }
+.radio-group input[type="radio"] { display: none; }
+.radio-group input[type="radio"]:checked + label { border-color: #2ecc71; background-color: #eafaf1; color: #27ae60; font-weight: 600; }
+
+/* Giao diện Tag (Dị ứng/Bệnh lý) với nút [-] trên cùng */
+.tags-wrapper { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 10px; }
+.tag-item { position: relative; padding: 6px 12px; background-color: #eafaf1; border: 1px solid #2ecc71; border-radius: 8px; font-size: 13px; color: #27ae60; display: flex; align-items: center; margin-right: 5px; }
+.tag-remove { position: absolute; top: -6px; right: -6px; background-color: #E8E8E8; color: black; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s; }
+.tag-remove:hover { background-color: #c0392b;color: white; transform: scale(1.1); }
+.tag-add-btn { padding: 6px 15px; border: 1px dashed #aaa; border-radius: 8px; font-size: 13px; color: #888; cursor: pointer; background: transparent; transition: 0.3s; }
+.tag-add-btn:hover { border-color: #2ecc71; color: #2ecc71; }
+.tag-input-box { display: none; padding: 5px 10px; border: 1px solid #2ecc71; border-radius: 8px; font-size: 13px; outline: none; width: 130px; }

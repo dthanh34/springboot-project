@@ -1,0 +1,253 @@
+body {
+    display: flex;
+    margin: 0;
+    background-color: #f4f7f6;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.main-content h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.sub-text {
+    margin-top: 10px;
+    color: #6b7280;
+}
+.list-switcher {
+    margin-top: 16px;
+    display: inline-flex;
+    background: #e5efe8;
+    border-radius: 999px;
+    padding: 3px;
+    gap: 3px;
+}
+
+.switch-tab {
+    border-radius: 999px;
+    padding: 8px 18px;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.switch-tab.active {
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    color: #111827;
+}
+
+.search-row {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #cfe2d5;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    background: transparent;
+}
+
+.search-box i { color: #4b5563; }
+
+.btn-filter {
+    border: 1px solid #cfe2d5;
+    border-radius: 10px;
+    background: #fff;
+    color: #111827;
+    font-weight: 600;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.alert-success {
+    margin-top: 12px;
+    color: #065f46;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height : 100%;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #dbe7de;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-img-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    object-position: center;
+}
+
+.badge-favorite {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ef4444;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.badge-custom {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #4f46e5;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.remove-favorite-form {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin: 0;
+}
+
+.btn-remove-favorite {
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #ef4444;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.btn-remove-favorite:hover {
+    background: #fee2e2;
+}
+
+.card-body {
+    flex-grow: 1;
+    padding: 14px 16px 18px;
+     background: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 22px;
+}
+
+.card-calo {
+    margin-top: 8px;
+    color: #6b7280;
+}
+
+.card-rating {
+    margin-top: 8px;
+    color: #16a34a;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.empty-state {
+    margin-top: 28px;
+    text-align: center;
+    padding: 36px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px dashed #9ca3af;
+    max-width: 450px;
+}
+
+.empty-state i {
+    font-size: 46px;
+    color: #ef4444;
+}
+
+.btn-go-foods {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    background: #16a34a;
+    font-weight: 600;
+}

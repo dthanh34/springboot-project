@@ -1,0 +1,217 @@
+.main-content {
+    margin-left: 250px;
+    padding: 30px 40px;
+    width: calc(100% - 250px);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.progress-header h1 {
+    font-size: 30px;
+    margin-bottom: 4px;
+}
+
+.progress-header p {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.btn-update {
+    border: none;
+    background: var(--primary-green);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #d1fae5;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.stat-title {
+    color: var(--text-gray);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.stat-card h3 {
+    font-size: 24px;
+    color: #0f172a;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #d1fae5;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.section-head h2 {
+    font-size: 16px;
+}
+
+.progress-track {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #22c55e;
+}
+
+.height-progress-fill {
+    background: #16a34a;
+}
+
+.goal-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-gray);
+    font-size: 13px;
+}
+
+.view-all {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-day h4 {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    font-size: 14px;
+}
+
+.empty-text {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.simple-chart .bmi-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-green);
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.08);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-card {
+    width:420px; background:#fff; border-radius:12px; padding:24px; position:relative;
+}
+
+.modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal-head h3 {
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+}
+
+.modal-close {
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modal-form {
+    max-width: 220px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #334155;
+}
+
+.form-group input {
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #c7e7d2;
+    background: #fff;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.btn-save {
+    margin: 10px auto 0;
+    display: block;
+    border: none;
+    background: var(--primary-green);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+}

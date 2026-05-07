@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Healthy Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng thông minh</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/home" class="nav-link active"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fa-regular fa-user"></i> Hồ sơ sức khỏe</a></li>
+            <li class="nav-item"><a href="/foods" class="nav-link"><i class="fa-solid fa-utensils"></i> Món ăn</a></li>
+            <li class="nav-item"><a href="/meal_plan" class="nav-link"><i class="fa-regular fa-calendar-days"></i> Thực đơn</a></li>
+            <li class="nav-item"><a href="/progress" class="nav-link"><i class="fa-solid fa-chart-line"></i> Tiến trình</a></li>
+            <li class="nav-item"><a href="/favorites" class="nav-link"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
+            <li class="nav-item"><a href="/search" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a></li>
+            <li class="nav-item"><a href="/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box">
+            <a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="greeting">
+                <h1>Xin chào, <span id="user-fullname">Người dùng</span></h1>
+                <p>Chúc bạn một ngày tốt lành!</p>
+            </div>
+            <a class="view-all" href="/meal_plan">
+                <button class="btn-add"><i class="fa-solid fa-plus"></i> Thêm bữa ăn</button>
+            </a>
+        </header>
+
+        <section class="stats-grid">
+            <!-- Calo Card -->
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <h3>Calo hôm nay</h3>
+                        <h2 id="today-calo-box">0 <span style="font-size:14px; color:#aaa;">/<span id="target-calo-box">0</span></span></h2>
+                    </div>
+                    <div class="icon-box"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                </div>
+                <div class="progress-bar"><div id="calo-progress-fill" class="progress-fill"></div></div>
+                <div class="stat-note">Còn lại <span id="remain-calo-box">0</span> calo</div>
+            </div>
+
+            <!-- BMI Card -->
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <h3>Chỉ số BMI</h3>
+                        <h2 id="bmi-val">0.0</h2>
+                    </div>
+                    <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+                </div>
+                <div id="bmi-badge" class="badge">Đang tải...</div>
+            </div>
+
+            <!-- BMR Card -->
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <h3>BMR</h3>
+                        <h2 id="bmr-val">0</h2>
+                    </div>
+                    <div class="icon-box"><i class="fa-solid fa-square-root-variable"></i></div>
+                </div>
+                <div class="stat-note" style="margin-top: 15px;">Calo cần thiết cơ bản</div>
+            </div>
+
+            <!-- Goal Card -->
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <h3>Mục tiêu</h3>
+                        <h2 id="goal-label">Đang tải...</h2>
+                    </div>
+                    <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
+                </div>
+                <div class="stat-note" style="margin-top: 15px;"><a href="/settings" style="color: inherit;">Cập nhật mục tiêu</a></div>
+            </div>
+        </section>
+
+        <!-- Today Meals -->
+        <section>
+            <div class="section-header">
+                <h2>Bữa ăn hôm nay</h2>
+                <a href="/meal_plan" class="view-all">Xem tất cả ></a>
+            </div>
+            <div class="meals-grid" id="meals-container">
+                <!-- JS render meals here -->
+            </div>
+        </section>
+
+        <!-- Suggestions -->
+        <section>
+            <div class="section-header">
+                <h2>Gợi ý cho bạn</h2>
+                <a href="/foods" class="view-all">Xem thêm ></a>
+            </div>
+            <div class="suggest-grid" id="suggestions-container">
+                <!-- JS render suggestions here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="/assets/js/user/home.js"></script>
+</body>
+</html>

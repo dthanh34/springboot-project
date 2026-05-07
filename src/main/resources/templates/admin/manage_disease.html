@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Bệnh lý - Healthy Food</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/manage_ingredient.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Giữ nguyên các style tùy chỉnh của Thành */
+        .tabs-container { display: flex; gap: 10px; margin-bottom: 25px; }
+        .tab-btn {
+            padding: 8px 16px; background: #f9fafb; border: 1px solid #e5e7eb;
+            border-radius: 8px; color: #6b7280; font-size: 14px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: 0.2s; font-family: inherit; outline: none;
+        }
+        .tab-btn.active { background: #fff; color: #111827; border-color: #d1d5db; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .action-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .search-box-custom { position: relative; width: 400px; }
+        .search-box-custom input { width: 100%; padding: 10px 15px 10px 40px; border-radius: 8px; border: 1px solid #e5e7eb; outline: none; }
+        .search-box-custom i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+        .table-card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border: 1px solid #f3f4f6; }
+        .badge-disease { background: #d1fae5; color: #059669; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #fff; padding: 30px; border-radius: 12px; width: 500px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; outline: none; }
+        .btn-submit { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        .btn-cancel { background: #f3f4f6; color: #374151; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Admin</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="fa-solid fa-table-cells-large"></i> Tổng quan</a></li>
+            <li class="nav-item"><a href="/admin/manage_users" class="nav-link"><i class="fa-regular fa-address-book"></i> Quản lý người dùng</a></li>
+            <li class="nav-item"><a href="/admin/manage_food" class="nav-link"><i class="fa-solid fa-utensils"></i> Quản lý món ăn</a></li>
+            <li class="nav-item"><a href="/admin/manage_ingredient" class="nav-link"><i class="fa-solid fa-apple-whole"></i> Quản lý nguyên liệu</a></li>
+            <li class="nav-item"><a href="/admin/manage_disease" class="nav-link active"><i class="fa-solid fa-heart-pulse"></i> Quản lý bệnh lý</a></li>
+            <li class="nav-item"><a href="/admin/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-title" style="margin-bottom: 25px;">
+            <h1>Quản lý bệnh lý</h1>
+            <p>Thiết lập danh mục bệnh và mức độ tương thích dinh dưỡng</p>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="disease-section"><i class="fa-regular fa-heart"></i> Bệnh lý</button>
+            <button class="tab-btn" data-tab="compatibility-section"><i class="fa-solid fa-link"></i> Tương thích</button>
+        </div>
+
+        <!-- Section 1: Bệnh lý -->
+        <div id="disease-section" class="tab-content">
+            <div class="action-header">
+                <div class="search-box-custom">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="diseaseSearch" placeholder="Tìm kiếm bệnh lý...">
+                </div>
+                <button class="btn-add" onclick="openModal('addDiseaseModal')" style="background: #10b981; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                    + Thêm bệnh lý
+                </button>
+            </div>
+            <div class="table-card">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #f3f4f6; text-align: left;">
+                            <th style="padding: 15px;">Tên bệnh lý</th>
+                            <th>Mô tả</th>
+                            <th style="text-align: center;">Số món ăn</th>
+                            <th style="text-align: center;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="disease-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2: Tương thích -->
+        <div id="compatibility-section" class="tab-content" style="display: none;">
+            <div class="action-header">
+                <span style="color: #4b5563;">Đánh giá mức độ phù hợp giữa món ăn và bệnh lý</span>
+                <button class="btn-add" onclick="openRatingModal()" style="background: #15803d; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                    + Thêm đánh giá
+                </button>
+            </div>
+            <div class="table-card">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #f3f4f6; text-align: left;">
+                            <th style="padding: 15px;">Món ăn</th>
+                            <th>Bệnh lý</th>
+                            <th>Mức độ tương thích</th>
+                            <th style="text-align: center;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="compatibility-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Thêm/Sửa bệnh lý -->
+    <div class="modal-overlay" id="diseaseModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Thêm bệnh lý mới</h3>
+            <form id="diseaseForm">
+                <input type="hidden" id="diseaseId">
+                <div class="form-group">
+                    <label>Tên bệnh lý</label>
+                    <input type="text" id="diseaseName" required>
+                </div>
+                <div class="form-group">
+                    <label>Mô tả</label>
+                    <textarea id="diseaseDesc" rows="4" required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal('diseaseModal')">Hủy</button>
+                    <button type="submit" class="btn-submit">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Thêm đánh giá -->
+    <div class="modal-overlay" id="ratingModal">
+        <div class="modal-content">
+            <h3>Thêm Đánh Giá Mới</h3>
+            <form id="ratingForm">
+                <div class="form-group">
+                    <label>Chọn món ăn</label>
+                    <select id="selectFood" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Bệnh lý</label>
+                    <select id="selectDisease" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Số sao (1-5)</label>
+                    <select id="selectRating" required>
+                        <option value="5">5 sao - Rất tốt</option>
+                        <option value="4">4 sao - Tốt</option>
+                        <option value="3">3 sao - Trung bình</option>
+                        <option value="2">2 sao - Hạn chế</option>
+                        <option value="1">1 sao - Không nên dùng</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal('ratingModal')">Hủy</button>
+                    <button type="submit" class="btn-submit">Lưu đánh giá</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/admin/manage_disease.js"></script>
+</body>
+</html>

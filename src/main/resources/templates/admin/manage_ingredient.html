@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Nguyên liệu - Healthy Food</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/manage_ingredient.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng thông minh</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="fa-solid fa-table-cells-large"></i> Tổng quan</a></li>
+            <li class="nav-item"><a href="/admin/manage_users" class="nav-link"><i class="fa-regular fa-address-book"></i> Quản lý người dùng</a></li>
+            <li class="nav-item"><a href="/admin/manage_food" class="nav-link"><i class="fa-solid fa-utensils"></i> Quản lý món ăn</a></li>
+            <li class="nav-item"><a href="/admin/manage_ingredient" class="nav-link active"><i class="fa-solid fa-apple-whole"></i> Quản lý nguyên liệu</a></li>
+            <li class="nav-item"><a href="/admin/manage_disease" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> Quản lý bệnh lý</a></li>
+            <li class="nav-item"><a href="/admin/settings" class="nav-link"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box"><a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a></div>
+    </aside>
+
+    <main class="main-content">
+        <div id="alert-container"></div>
+
+        <div class="page-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h1>Quản lý Nguyên liệu</h1>
+                <p>Thêm sửa xóa nguyên liệu trong hệ thống</p>
+            </div>
+            <a href="/admin/add_ingredient" class="btn-add" style="background: #10b981; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                + Thêm nguyên liệu
+            </a>
+        </div>
+
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="ingSearch" placeholder="Tìm kiếm theo tên hoặc phân loại..." autocomplete="off">
+        </div>
+
+        <div class="table-card">
+            <div class="table-header">Danh sách nguyên liệu (<span id="total-count">0</span>)</div>
+            
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Tên nguyên liệu</th>
+                        <th>Phân loại</th>
+                        <th>Calo</th>
+                        <th>Protein</th>
+                        <th>Fat</th>
+                        <th>Carbohydrate</th>
+                        <th>Đơn vị</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="ing-tbody">
+                    <!-- JS render data -->
+                </tbody>
+            </table>
+
+            <div class="pagination" id="ing-pagination">
+                <!-- JS render pagination -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Xác nhận xóa -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <h3>Xác nhận xóa?</h3>
+            <p>Bạn có chắc chắn muốn xóa nguyên liệu <strong id="deleteIngredientName"></strong> không? Hành động này không thể hoàn tác.</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeDeleteModal()">Hủy bỏ</button>
+                <button id="confirmDeleteBtn" class="btn-confirm-delete" style="padding: 10px 20px; background: #dc2626; color: white; border-radius: 8px; border: none; cursor: pointer;">Xóa !</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/admin/manage_ingredient.js"></script>
+</body>
+</html>

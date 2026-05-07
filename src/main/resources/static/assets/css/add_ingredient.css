@@ -1,0 +1,101 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 15, 2026, 10:45:59 PM
+    Author     : dkhai
+*/
+
+.add-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f9fafb;
+    min-height: calc(100vh - 60px);
+}
+
+.add-form-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 24px;
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.close-btn:hover { color: #111827; }
+
+.form-title h2 { margin: 0 0 5px 0; color: #111827; font-size: 24px; }
+.form-title p { margin: 0 0 30px 0; color: #6b7280; font-size: 15px; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: #f9fafb;
+}
+
+.form-control:focus { border-color: #10b981; background-color: #fff; }
+
+/* Grid chia cột cho các chỉ số */
+.macro-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+/* Khu vực chọn bệnh */
+.disease-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.disease-select {
+    height: 100px; /* Giới hạn chiều cao cho multi-select */
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.btn-cancel {
+    padding: 10px 25px; border: 1px solid #e5e7eb;
+    border-radius: 8px; background: white;
+    color: #4b5563; text-decoration: none; font-weight: 500;
+}
+
+.btn-save {
+    padding: 10px 25px; border: none;
+    border-radius: 8px; background: #10b981;
+    color: white; font-weight: 500; cursor: pointer;
+}
+.btn-save:hover { background: #059669; }

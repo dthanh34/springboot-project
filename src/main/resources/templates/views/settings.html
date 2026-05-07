@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cài đặt tài khoản - Healthy Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/settings.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf text-white"></i></div>
+            <div class="brand-text"><h2>Healthy Food</h2><span>Dinh dưỡng thông minh</span></div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/home" class="nav-link"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fa-regular fa-user"></i> Hồ sơ sức khỏe</a></li>
+            <li class="nav-item"><a href="/foods" class="nav-link"><i class="fa-solid fa-utensils"></i> Món ăn</a></li>
+            <li class="nav-item"><a href="/meal_plan" class="nav-link"><i class="fa-regular fa-calendar-days"></i> Thực đơn</a></li>
+            <li class="nav-item"><a href="/progress" class="nav-link"><i class="fa-solid fa-chart-line"></i> Tiến trình</a></li>
+            <li class="nav-item"><a href="/favorites" class="nav-link"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
+            <li class="nav-item"><a href="/search" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a></li>
+            <li class="nav-item"><a href="/settings" class="nav-link active"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+        </ul>
+        <div class="logout-box"><a href="/logout" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a></div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1>Cài đặt tài khoản</h1>
+            <p>Quản lý thông tin tài khoản của bạn</p>
+        </div>
+
+        <div class="settings-container">
+            
+            <!-- FORM 1: THÔNG TIN CÁ NHÂN -->
+            <form id="personalInfoForm">
+                <div class="setting-card">
+                    <div class="card-top">
+                        <div class="card-title-box">
+                            <div class="icon-box"><i class="fa-regular fa-user"></i></div>
+                            <div>
+                                <h3>Thông tin cá nhân</h3>
+                                <p>Cập nhật tên và email</p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-save-green"><i class="fa-regular fa-floppy-disk"></i> Lưu thay đổi</button>
+                    </div>
+                    <div id="msg-info"></div>
+                    <div class="form-row-custom">
+                        <div class="form-group">
+                            <label>Họ và Tên</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" name="email" class="form-control-custom" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- FORM 2: MỤC TIÊU DINH DƯỠNG -->
+            <form id="nutritionGoalForm">
+                <div class="setting-card">
+                    <div class="card-top">
+                        <div class="card-title-box">
+                            <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
+                            <div>
+                                <h3>Mục tiêu dinh dưỡng</h3>
+                                <p>Cập nhật mục tiêu cho trang chủ</p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-save-green"><i class="fa-regular fa-floppy-disk"></i> Lưu mục tiêu</button>
+                    </div>
+                    <div id="msg-goal"></div>
+                    <div class="form-row-custom">
+                        <div class="form-group">
+                            <label>Loại mục tiêu</label>
+                            <select id="goalType" name="goalType" class="form-control-custom">
+                                <option value="Giảm cân">Giảm cân</option>
+                                <option value="Duy trì">Duy trì</option>
+                                <option value="Tăng cân">Tăng cân</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Calories mục tiêu/ngày</label>
+                            <input type="number" id="targetCalories" min="800" step="10" name="targetCalories" class="form-control-custom" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- FORM 3: ĐỔI MẬT KHẨU -->
+            <form id="passwordForm">
+                <div class="setting-card">
+                    <div class="card-top" style="margin-bottom: 25px;">
+                        <div class="card-title-box">
+                            <div class="icon-box"><i class="fa-solid fa-lock"></i></div>
+                            <div>
+                                <h3>Đổi mật khẩu</h3>
+                                <p>Đảm bảo mật khẩu của bạn được bảo mật</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="msg-pass"></div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label>Mật khẩu hiện tại</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-unlock-keyhole"></i>
+                            <input type="password" id="oldPassword" name="oldPassword" class="form-control-custom" placeholder="Nhập mật khẩu hiện tại" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label>Mật khẩu mới</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control-custom" placeholder="Nhập mật khẩu mới" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Xác nhận mật khẩu mới</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control-custom" placeholder="Xác nhận mật khẩu mới" required>
+                        </div>
+                    </div>
+                    <div class="card-bottom-action">
+                        <button type="submit" class="btn-save-green"><i class="fa-regular fa-floppy-disk"></i> Lưu thay đổi</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </main>
+
+    <script src="/assets/js/user/settings.js"></script>
+</body>
+</html>

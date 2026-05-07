@@ -1,0 +1,52 @@
+/* ========================================================
+   FILE: login.css - CHỈ DÀNH CHO TRANG ĐĂNG NHẬP
+   ======================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+body { background-color: #eafaf1; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.login-container {
+    background-color: #ffffff;
+    width: 400px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.logo-icon {
+    background-color: var(--primary-green);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;}
+
+/* Các ô nhập liệu */
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; font-size: 14px; color: #333; margin-bottom: 8px; font-weight: 500; }
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    width: 100%; padding: 12px 15px; background-color: #f5f6f8;
+    border: 1px solid transparent; border-radius: 8px; font-size: 14px; outline: none; transition: 0.3s;
+}
+.input-group input:focus { border-color: #2ecc71; background-color: #fff; }
+
+/* Nút bấm & Liên kết */
+.btn-login {
+    width: 100%; padding: 14px; background-color: #2ecc71;
+    color: white; border: none; border-radius: 8px; font-size: 16px;
+    font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px;
+}
+.btn-login:hover { background-color: #27ae60; }
+.register-link { margin-top: 25px; font-size: 14px; color: #888; }
+.register-link a { color: #2ecc71; text-decoration: none; font-weight: 600; transition: 0.3s; }
+.register-link a:hover { color: #27ae60; text-decoration: underline; }
+
+/* Thông báo Lỗi / Thành công */
+.msg { padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; font-weight: 500; }
+.error-msg {  color: #e74c3c; margin-bottom: 12px ; font-size: 12px }
+.success-msg { background-color: #eafaf1; color: #27ae60; border: 1px solid #2ecc71; }
