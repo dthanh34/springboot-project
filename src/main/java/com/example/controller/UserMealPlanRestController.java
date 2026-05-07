@@ -52,13 +52,16 @@ public class UserMealPlanRestController {
      
 
     @PostMapping("/meal-plan/update")
-     public ResponseEntity<?> updateMeal(@RequestBody Map<String, Object> payload, Authentication authentication) {
-        UserDTO currentUser = userService.getCurrentUser(authentication);
-         try {
-            mealPlanService.updateUserMeal(currentUser.getId(), payload);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-    }
+	 public ResponseEntity<?> updateMeal(@RequestBody Map<String, Object> payload, Authentication authentication) {
+	    UserDTO currentUser = userService.getCurrentUser(authentication);
+	     try {
+	        mealPlanService.updateUserMeal(currentUser.getId(), payload);
+	        return ResponseEntity.ok().build();
+	    } catch (IllegalArgumentException ex) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    } catch (Exception ex) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Không thể lưu thực đơn. Vui lòng kiểm tra món ăn đã chọn và thử lại.");
+	    }
+	}
 }

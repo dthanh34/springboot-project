@@ -59,10 +59,11 @@ $(document).ready(function() {
                 foodsHtml = `<p class="empty-text">Chưa có món nào.</p>`;
             } else {
                 section.foods.forEach(food => {
+                    const imageSrc = food.imageUrl ? `/images/${food.imageUrl}` : '/images/com_trang.jpg';
                     foodsHtml += `
                         <div class="food-pill">
                             <a href="/food-detail?id=${food.foodId}" class="food-link">
-                                <img src="/assets/images/${food.imageUrl}" alt="${food.foodName}">
+                                <img src="${imageSrc}" alt="" onerror="this.onerror=null;this.src='/images/com_trang.jpg';">
                                 <div>
                                     <h4>${food.foodName}</h4>
                                     <p>${food.calories.toFixed(1)} calo</p>

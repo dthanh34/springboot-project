@@ -206,15 +206,26 @@ public class MealPlanService {
     // 4. Hàm điều chỉnh món ăn trong bữa (Nâng cao từ addFoodToMenu)[cite: 17]
     @Transactional
     public void updateUserMeal(Long userId, Map<String, Object> payload) {
+         if (payload == null) {
+            throw new IllegalArgumentException("Dữ liệu cập nhật không hợp lệ.");
+        }
         LocalDate date = LocalDate.parse((String) payload.get("date"));
         Integer mealTypeId = Integer.valueOf(payload.get("mealTypeId").toString());
         boolean mealTypeExists = mealTypeRepo.existsById(mealTypeId);
         if (!mealTypeExists) {
             throw new IllegalArgumentException("Meal type không tồn tại: " + mealTypeId);
         }
-        List<Integer> foodIds = ((List<?>) payload.get("foodIds")).stream()
+         Object rawFoodIds = payload.get("foodIds");
+        if (!(rawFoodIds instanceof List<?> foodIdList)) {
+            throw new IllegalArgumentException("Danh sách món ăn không hợp lệ.");
+        }
+
+        List<Integer> foodIds = foodIdList.stream()
                 .map(v -> Integer.valueOf(v.toString()))
                 .collect(Collectors.toList());
+        if (foodIds.isEmpty()) {
+            throw new IllegalArgumentException("Vui lòng chọn ít nhất 1 món ăn.");
+        }
         DailyMenu menu = dailyMenuRepo.findByUserIdAndMenuDate(userId.intValue(), date)
             .orElseGet(() -> {
                 DailyMenu nm = new DailyMenu();
