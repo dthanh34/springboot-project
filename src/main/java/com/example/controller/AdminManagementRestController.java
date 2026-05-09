@@ -70,4 +70,33 @@ public class AdminManagementRestController {
     public ResponseEntity<?> getCompatibility() {
         return ResponseEntity.ok(diseaseService.getAllCompatibility());
     }
+    
+
+    @PostMapping("/diseases")
+    public ResponseEntity<?> addDisease(@RequestBody com.example.entity.Disease disease) {
+        return ResponseEntity.ok(diseaseService.createDisease(disease));
+    }
+
+    @PutMapping("/diseases/{id}")
+    public ResponseEntity<?> updateDisease(@PathVariable Integer id, @RequestBody com.example.entity.Disease disease) {
+        return ResponseEntity.ok(diseaseService.updateDisease(id, disease));
+    }
+
+    @DeleteMapping("/diseases/{id}")
+    public ResponseEntity<?> deleteDisease(@PathVariable Integer id) {
+        diseaseService.deleteDisease(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/compatibility")
+    public ResponseEntity<?> addCompatibility(@RequestBody com.example.dto.DiseaseCompatibilityDTO dto) {
+        return diseaseService.addCompatibility(dto);
+    }
+
+    @DeleteMapping("/compatibility/{id}")
+    public ResponseEntity<?> deleteCompatibility(@PathVariable Integer id) {
+        diseaseService.deleteCompatibility(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

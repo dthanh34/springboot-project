@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", function() {
     loadAdminInfo();
 
     // Xử lý cập nhật thông tin cá nhân
-    document.getElementById('personalInfoForm').onsubmit = async function(e) {
+    document.getElementById('infoForm').onsubmit = async function(e) {
         e.preventDefault();
         const data = {
-            fullName: document.getElementById('fullName').value,
-            email: document.getElementById('email').value
+            fullName: document.getElementById('adminFullName').value,
+            email: document.getElementById('adminEmail').value
         };
-        const res = await sendUpdate('/api/user/settings/personal', data);
-        renderAlert('msg-info', res);
+        const res = await postData('/api/user/settings/personal', data);
+        showAlert('alert-info', res.success, res.message || 'Cập nhật thông tin thành công');
     };
 
     // Xử lý đổi mật khẩu
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const confirmPass = document.getElementById('confirmPassword').value;
 
         if (newPass !== confirmPass) {
-            renderAlert('msg-pass', { success: false, message: "Mật khẩu xác nhận không khớp!" });
+             showAlert('alert-pass', false, 'Mật khẩu xác nhận không khớp!');
             return;
         }
 
@@ -27,20 +27,22 @@ document.addEventListener("DOMContentLoaded", function() {
             oldPassword: document.getElementById('oldPassword').value,
             newPassword: newPass
         };
-        const res = await sendUpdate('/api/user/settings/password', data);
-        renderAlert('msg-pass', res);
-        if(res.success) e.target.reset();
+        const res = await postData('/api/user/settings/password', data);
+        showAlert('alert-pass', res.success, res.message || 'Đổi mật khẩu thành công');
+        if (res.success) e.target.reset();
     };
 });
 
 async function loadAdminInfo() {
     try {
         const res = await fetch('/api/user/settings/data');
-        const admin = await res.json();
-        document.getElementById('adminFullName').value = admin.user.fullName;
-        document.getElementById('adminEmail').value = admin.user.email;
+       const payload = await res.json();
+        if (payload?.user) {
+            document.getElementById('adminFullName').value = payload.user.fullName || '';
+            document.getElementById('adminEmail').value = payload.user.email || '';
+        }
     } catch (err) {
-        console.error("Lỗi load thông tin:", err);
+       showAlert('alert-info', false, 'Không tải được thông tin quản trị viên.');
     }
 }
 
@@ -53,12 +55,12 @@ async function postData(url, data) {
         });
         return await response.json();
     } catch (err) {
-        return { success: false, message: "Lỗi kết nối máy chủ!" };
+         return { success: false, message: 'Lỗi kết nối máy chủ!' };
     }
 }
 
 function showAlert(containerId, isSuccess, message) {
     const container = document.getElementById(containerId);
     container.innerHTML = `<div class="alert ${isSuccess ? 'alert-success' : 'alert-error'}">${message}</div>`;
-    setTimeout(() => container.innerHTML = '', 4000); // Tự ẩn sau 4 giây
+    setTimeout(() => (container.innerHTML = ''), 4000);
 }
