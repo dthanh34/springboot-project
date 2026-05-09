@@ -8,6 +8,8 @@ import java.util.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -70,7 +72,17 @@ public class AdminService {
             loginStats.put(day.format(formatter), 0L);
         }
          for (Object[] row : loginRepo.countDistinctUsersByLoginDateBetweenLast10Days()) {
-            String dayLabel = String.valueOf(row[0]);
+            String dayLabel;
+            Object rawDate = row[0];
+            if (rawDate instanceof Date sqlDate) {
+                dayLabel = sqlDate.toLocalDate().format(formatter);
+            } else {
+                try {
+                    dayLabel = LocalDate.parse(String.valueOf(rawDate)).format(formatter);
+                } catch (DateTimeParseException e) {
+                    dayLabel = String.valueOf(rawDate);
+                }
+            }
             long loginCount = ((Number) row[1]).longValue();
             if (loginStats.containsKey(dayLabel)) {
                 loginStats.put(dayLabel, loginCount);
@@ -79,16 +91,13 @@ public class AdminService {
         data.put("chartLabels", new ArrayList<>(loginStats.keySet()));
         data.put("chartData", new ArrayList<>(loginStats.values()));
 
-        Map<String, Integer> topFoods = new LinkedHashMap<>();
-        userFavoriteRepo.findAll().stream()
-            .filter(f -> f.getFood() != null && f.getFood().getFoodName() != null)
-            .forEach(f -> topFoods.merge(f.getFood().getFoodName(), 1, Integer::sum));
-        LinkedHashMap<String, Integer> top3 = topFoods.entrySet().stream()
-            .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
-            .limit(3)
-            .collect(LinkedHashMap::new,
-                (m, e) -> m.put(e.getKey(), e.getValue()),
-                LinkedHashMap::putAll);
+        LinkedHashMap<String, Integer> top3 = new LinkedHashMap<>();
+        for (Object[] row : userFavoriteRepo.countTopFoods()) {
+            if (row[0] == null || row[1] == null) {
+                continue;
+            }
+            top3.put(String.valueOf(row[0]), ((Number) row[1]).intValue());
+        }
         data.put("topFoods", top3);
 
         Map<String, Double> popularGoals = new LinkedHashMap<>();

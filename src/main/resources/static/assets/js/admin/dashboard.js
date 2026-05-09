@@ -40,6 +40,36 @@ function formatNumber(value) {
 }
 
 
+function drawEmptyChartState(canvas, message) {
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const existing = parent.querySelector('.chart-empty-state');
+    if (existing) existing.remove();
+
+    const badge = document.createElement('div');
+    badge.className = 'chart-empty-state';
+    badge.textContent = message || 'Chưa có dữ liệu để hiển thị';
+    badge.style.position = 'absolute';
+    badge.style.inset = '0';
+    badge.style.display = 'flex';
+    badge.style.alignItems = 'center';
+    badge.style.justifyContent = 'center';
+    badge.style.color = '#94a3b8';
+    badge.style.fontWeight = '600';
+    badge.style.fontSize = '14px';
+    badge.style.pointerEvents = 'none';
+
+    parent.style.position = 'relative';
+    parent.appendChild(badge);
+}
+
+function clearEmptyChartState(canvas) {
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    const badge = parent.querySelector('.chart-empty-state');
+    if (badge) badge.remove();
+}
 function updateStatCard(idVal, idGrowth, idContainer, value, growth) {
     const safeValue = Number(value) || 0;
     const safeGrowth = Number.isFinite(Number(growth)) ? Number(growth) : 0;
@@ -63,10 +93,13 @@ function renderLoginChart(labels, dataValues) {
         loginChartInstance.destroy();
     }
 
-     if (!labels.length || !dataValues.length) {
+    const hasData = labels.length && dataValues.length && dataValues.some(v => Number(v) > 0);
+    if (!hasData) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawEmptyChartState(canvas, 'Chưa có lượt đăng nhập trong 10 ngày gần đây');
         return;
     }
+    clearEmptyChartState(canvas);
 
     loginChartInstance = new Chart(ctx, {
         type: 'line',
@@ -103,11 +136,13 @@ function renderRegisterChart(rawRegisterData) {
     if (registerChartInstance) {
         registerChartInstance.destroy();
     }
-    if (!dataValues.length) {
+    const hasData = dataValues.length && dataValues.some(v => Number(v) > 0);
+    if (!hasData) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         drawEmptyChartState(canvas, 'Chưa có người dùng đăng ký mới trong năm nay');
         return;
     }
-
+     clearEmptyChartState(canvas);
     registerChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
