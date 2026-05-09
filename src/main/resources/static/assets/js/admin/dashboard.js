@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    Chart.register(ChartDataLabels);
+    if (window.Chart && window.ChartDataLabels) {
+        Chart.register(ChartDataLabels);
+    }
     loadDashboardData();
 });
 let loginChartInstance;
@@ -47,13 +49,19 @@ function updateStatCard(idVal, idGrowth, idContainer, value, growth) {
 }
 
 function renderLoginChart(labels, dataValues) {
-    const ctx = document.getElementById('loginChart').getContext('2d');
+   const canvas = document.getElementById('loginChart');
+    const ctx = canvas.getContext('2d');
     let gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
     gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
 
     if (loginChartInstance) {
         loginChartInstance.destroy();
+    }
+
+     if (!labels.length || !dataValues.length) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
     }
 
     loginChartInstance = new Chart(ctx, {
@@ -84,9 +92,14 @@ function renderRegisterChart(rawRegisterData) {
     const labels = Array.from({length: currentMonth}, (_, i) => `T${i + 1}`);
     const dataValues = rawRegisterData.slice(0, currentMonth);
 
-    const ctx = document.getElementById('registerChart').getContext('2d');
+     const canvas = document.getElementById('registerChart');
+    const ctx = canvas.getContext('2d');
     if (registerChartInstance) {
         registerChartInstance.destroy();
+    }
+    if (!dataValues.length) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
     }
 
     registerChartInstance = new Chart(ctx, {
