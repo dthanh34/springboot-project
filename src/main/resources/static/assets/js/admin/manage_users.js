@@ -14,7 +14,7 @@ async function fetchUsers(page) {
     const role = document.getElementById('filterRole').value;
     
     try {
-        const response = await fetch(`/api/admin/users?page=${page}&keyword=${keyword}&role=${role}`);
+        const response = await fetch(`/api/admin/users?page=${page}&keyword=${encodeURIComponent(keyword)}&role=${encodeURIComponent(role)}`);
         const data = await response.json();
 
         // Cập nhật stats
@@ -22,8 +22,8 @@ async function fetchUsers(page) {
         document.getElementById('stat-active').innerText = data.activeCount;
         document.getElementById('stat-inactive').innerText = data.inactiveCount;
 
-        renderUserTable(data.users);
-        renderPagination(data.currentPage, data.totalPages);
+         renderUserTable(data.users || []);
+        renderPagination(data.currentPage || 1, data.totalPages || 1);
     } catch (error) {
         console.error("Lỗi tải người dùng:", error);
     }
@@ -73,6 +73,11 @@ function toggleActionMenu(btn) {
     menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
 }
 
+document.addEventListener('click', function (event) {
+    if (!event.target.closest('.action-wrapper')) {
+        document.querySelectorAll('.action-menu').forEach(m => m.style.display = 'none');
+    }
+});
 // Modal Functions
 function openEmailModal(email) {
     document.getElementById("emailModal").style.display = "block";

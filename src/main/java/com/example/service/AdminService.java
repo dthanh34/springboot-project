@@ -126,8 +126,45 @@ public class AdminService {
 
     public Map<String, Object> getUsersPaged(int page, String keyword, String role) {
         Map<String, Object> result = new HashMap<>();
-        result.put("users", userRepo.findAll()); 
-        result.put("totalCount", userRepo.count());
+        final int pageSize = 10;
+        int safePage = Math.max(page, 1);
+        String normalizedKeyword = keyword == null ? "" : keyword.trim().toLowerCase();
+        String normalizedRole = role == null ? "all" : role.trim().toUpperCase();
+
+        List<User> allUsers = userRepo.findAll();
+
+        List<User> filteredUsers = allUsers.stream()
+                .filter(user -> {
+                    if (normalizedKeyword.isEmpty()) {
+                        return true;
+                    }
+                    String name = user.getName() == null ? "" : user.getName().toLowerCase();
+                    String email = user.getEmail() == null ? "" : user.getEmail().toLowerCase();
+                    return name.contains(normalizedKeyword) || email.contains(normalizedKeyword);
+                })
+                .filter(user -> "ALL".equals(normalizedRole)
+                        || (user.getRole() != null && normalizedRole.equalsIgnoreCase(user.getRole())))
+                .toList();
+
+        int totalCount = filteredUsers.size();
+        int totalPages = Math.max(1, (int) Math.ceil((double) totalCount / pageSize));
+        int currentPage = Math.min(safePage, totalPages);
+        int fromIndex = (currentPage - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, totalCount);
+
+        List<User> pagedUsers = fromIndex >= totalCount
+                ? Collections.emptyList()
+                : filteredUsers.subList(fromIndex, toIndex);
+
+        long activeCount = allUsers.stream().filter(u -> Integer.valueOf(1).equals(u.getIsActivate())).count();
+        long inactiveCount = allUsers.size() - activeCount;
+
+        result.put("users", pagedUsers);
+        result.put("totalCount", totalCount);
+        result.put("activeCount", activeCount);
+        result.put("inactiveCount", inactiveCount);
+        result.put("currentPage", currentPage);
+        result.put("totalPages", totalPages);
         return result;
     }
  private double calcGrowthPercent(long thisMonth, long lastMonth) {
