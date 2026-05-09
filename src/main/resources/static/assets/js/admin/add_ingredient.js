@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Gom dữ liệu từ form
         const ingredientData = {
-            name: document.getElementById('ingName').value,
+           ingredientName: document.getElementById('ingName').value,
             category: document.getElementById('ingCategory').value,
             calories: parseFloat(document.getElementById('ingCal').value),
             protein: parseFloat(document.getElementById('ingPro').value),

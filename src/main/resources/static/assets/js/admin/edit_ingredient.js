@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const data = await response.json();
             
             // Đổ dữ liệu vào form
-            document.getElementById('ingId').value = data.id;
-            document.getElementById('ingName').value = data.name;
-            document.getElementById('ingCategory').value = data.category;
+             document.getElementById('ingId').value = data.ingredientId;
+            document.getElementById('ingName').value = data.ingredientName;
+             setCategoryValue(data.category);
             document.getElementById('ingCal').value = data.calories;
             document.getElementById('ingPro').value = data.protein;
             document.getElementById('ingFat').value = data.fat;
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
 
         const updatedData = {
-            id: parseInt(document.getElementById('ingId').value),
-            name: document.getElementById('ingName').value,
+            ingredientId: parseInt(document.getElementById('ingId').value),
+            ingredientName: document.getElementById('ingName').value,
             category: document.getElementById('ingCategory').value,
             calories: parseFloat(document.getElementById('ingCal').value),
             protein: parseFloat(document.getElementById('ingPro').value),
@@ -67,3 +67,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+    function setCategoryValue(rawCategory) {
+        const select = document.getElementById('ingCategory');
+        const normalized = (rawCategory || '').trim().toLowerCase();
+
+        const matchedOption = Array.from(select.options).find(
+            option => option.value.trim().toLowerCase() === normalized
+        );
+
+        if (matchedOption) {
+            select.value = matchedOption.value;
+        }
+    }

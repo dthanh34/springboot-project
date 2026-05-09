@@ -44,6 +44,44 @@ public class AdminManagementRestController {
     }
 
     
+    @GetMapping("/ingredients/{id}")
+    public ResponseEntity<?> getIngredientById(@PathVariable Integer id) {
+        var ingredient = ingredientService.getById(id);
+        if (ingredient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ingredient);
+    }
+
+    @PostMapping("/add-ingredient")
+    public ResponseEntity<?> addIngredient(@RequestBody com.example.entity.Ingredient ingredient) {
+        ingredientService.saveIngredient(ingredient);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/ingredients/{id}")
+    public ResponseEntity<?> updateIngredient(@PathVariable Integer id, @RequestBody com.example.entity.Ingredient ingredient) {
+        var existing = ingredientService.getById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ingredient.setIngredientId(id);
+        ingredientService.saveIngredient(ingredient);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/ingredients/{id}")
+    public ResponseEntity<?> deleteIngredient(@PathVariable Integer id) {
+        var existing = ingredientService.getById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ingredientService.deleteIngredient(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/foods")
     public ResponseEntity<?> getAllFoods() {
         return ResponseEntity.ok(foodService.getAllFoodsForAdmin());
