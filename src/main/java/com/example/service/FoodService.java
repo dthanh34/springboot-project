@@ -77,7 +77,10 @@ public class FoodService {
         food.setCalories(Double.parseDouble(params.get("calories").toString()));
         food.setProtein(Double.parseDouble(params.get("protein").toString()));
         food.setFat(Double.parseDouble(params.get("fat").toString()));
-        food.setCarbohydrate(Double.parseDouble(params.get("carb").toString()));
+        food.setCarbohydrate(Double.parseDouble((params.get("carbohydrate") != null ? params.get("carbohydrate") : params.get("carb")).toString()));
+        if (params.get("foodType") != null && !params.get("foodType").toString().isBlank()) {
+            food.setFoodType(Integer.parseInt(params.get("foodType").toString()));
+        }
         
         foodRepo.save(food);
     }

@@ -40,6 +40,7 @@ $(document).ready(function() {
         $('#foodName').val(data.name);
         $('#description').val(data.description);
         $('#recipe').val(data.recipe);
+         $('#foodType').val(data.foodType ?? '');
         $('#imagePreview').attr('src', data.imageUrl || '/assets/images/default-food.png');
 
         // Đổ danh sách nguyên liệu đã có

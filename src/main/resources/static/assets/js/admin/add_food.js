@@ -60,6 +60,9 @@ $(document).ready(function() {
     });
 
     // 4. Xử lý UI file upload
+    $('#foodType').on('change', function() {
+        $(this).removeClass('error-border');
+    });
     $('#imageFile').on('change', function() {
         if (this.files.length > 0) {
             $('#fileNameDisplay').text(this.files[0].name).css('color', '#10b981');
@@ -108,7 +111,10 @@ $(document).ready(function() {
             $('#fileNameDisplay').text("Vui lòng chọn ảnh!").css('color', '#dc2626');
             isValid = false;
         }
-
+        if (!$('#foodType').val()) {
+            $('#foodType').addClass('error-border');
+            isValid = false;
+        }
         if (!isValid) return;
 
         // Chuẩn bị dữ liệu gửi đi (FormData vì có file)
@@ -120,6 +126,7 @@ $(document).ready(function() {
         formData.append('protein', $('#totalPro').val());
         formData.append('fat', $('#totalFat').val());
         formData.append('carbohydrate', $('#totalCarb').val());
+        formData.append('foodType', $('#foodType').val());
         formData.append('imageFile', fileInput.files[0]);
 
         // Thêm danh sách nguyên liệu dưới dạng array
