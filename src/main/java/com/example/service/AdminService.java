@@ -1,11 +1,13 @@
 package com.example.service;
 
 import com.example.repository.*;
-import com.example.entity.*; // Đảm bảo import đúng Entity User
+import com.example.entity.*; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class AdminService {
@@ -13,7 +15,9 @@ public class AdminService {
     @Autowired private UserRepository userRepo;
     @Autowired private FoodRepository foodRepo;
     @Autowired private DailyMenuRepository dailyMenuRepo;
-    @Autowired private UserLoginRepository loginRepo; 
+     @Autowired private UserLoginRepository loginRepo;
+    @Autowired private UserFavoriteRepository userFavoriteRepo;
+    @Autowired private UserGoalRepository userGoalRepo;
 
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
@@ -34,11 +38,64 @@ public class AdminService {
 
     public Map<String, Object> getDashboardData() {
         Map<String, Object> data = new HashMap<>();
-        data.put("totalUsers", userRepo.count());
-        data.put("totalFoods", foodRepo.count());
-        
-        data.put("chartLabels", Arrays.asList("Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "CN"));
-        data.put("chartData", Arrays.asList(10, 20, 15, 30, 25, 40, 35));
+        long totalUsers = userRepo.count();
+        long totalFoods = foodRepo.count();
+        long totalMenus = dailyMenuRepo.count();
+
+        data.put("name", "Admin");
+        data.put("totalUsers", totalUsers);
+        data.put("totalFoods", totalFoods);
+        data.put("totalMenus", totalMenus);
+        data.put("todayActivities", loginRepo.countByLoginDate(LocalDate.now()));
+
+        data.put("userGrowth", calcGrowthPercent(userRepo.countUsersThisMonth(), userRepo.countUsersLastMonth()));
+        data.put("foodGrowth", calcGrowthPercent(foodRepo.countFoodsThisMonth(), foodRepo.countFoodsLastMonth()));
+        data.put("menuGrowth", calcGrowthPercent(dailyMenuRepo.countMenusThisMonth(), dailyMenuRepo.countMenusLastMonth()));
+
+        List<Integer> userChartData = new ArrayList<>(Collections.nCopies(12, 0));
+        for (Object[] row : userRepo.countNewUsersByMonthInCurrentYear()) {
+            int month = ((Number) row[0]).intValue();
+            int count = ((Number) row[1]).intValue();
+            if (month >= 1 && month <= 12) {
+                userChartData.set(month - 1, count);
+            }
+        }
+        data.put("userChartData", userChartData);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+        List<String> labels = new ArrayList<>();
+        List<Long> values = new ArrayList<>();
+        for (int i = 9; i >= 0; i--) {
+            LocalDate day = LocalDate.now().minusDays(i);
+            labels.add(day.format(formatter));
+            values.add(loginRepo.countByLoginDate(day));
+        }
+        data.put("chartLabels", labels);
+        data.put("chartData", values);
+
+        Map<String, Integer> topFoods = new LinkedHashMap<>();
+        userFavoriteRepo.findAll().stream()
+            .filter(f -> f.getFood() != null && f.getFood().getFoodName() != null)
+            .forEach(f -> topFoods.merge(f.getFood().getFoodName(), 1, Integer::sum));
+        LinkedHashMap<String, Integer> top3 = topFoods.entrySet().stream()
+            .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+            .limit(3)
+            .collect(LinkedHashMap::new,
+                (m, e) -> m.put(e.getKey(), e.getValue()),
+                LinkedHashMap::putAll);
+        data.put("topFoods", top3);
+
+        Map<String, Double> popularGoals = new LinkedHashMap<>();
+        List<Object[]> goals = userGoalRepo.countGoalsByType();
+        double totalGoals = goals.stream().mapToDouble(r -> ((Number) r[1]).doubleValue()).sum();
+        if (totalGoals > 0) {
+            for (Object[] goal : goals) {
+                String goalType = String.valueOf(goal[0]);
+                double count = ((Number) goal[1]).doubleValue();
+                popularGoals.put(goalType, (count * 100.0) / totalGoals);
+            }
+        }
+        data.put("popularGoals", popularGoals);
         
         return data;
     }
@@ -48,5 +105,11 @@ public class AdminService {
         result.put("users", userRepo.findAll()); 
         result.put("totalCount", userRepo.count());
         return result;
+    }
+ private double calcGrowthPercent(long thisMonth, long lastMonth) {
+        if (lastMonth <= 0) {
+            return thisMonth > 0 ? 100.0 : 0.0;
+        }
+        return ((double) (thisMonth - lastMonth) / lastMonth) * 100.0;
     }
 }
